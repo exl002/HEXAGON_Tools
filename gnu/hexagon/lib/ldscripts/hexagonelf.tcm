@@ -1,0 +1,390 @@
+/* Script for -tcm: normal executables using TCM */
+OUTPUT_FORMAT("elf32-littlehexagon", "elf32-littlehexagon",
+	      "elf32-littlehexagon")
+ENTRY(start)
+SEARCH_DIR("/opt/codesourcery/hexagon/lib");
+PHDRS
+{
+  HEADERS     PT_PHDR FILEHDR PHDRS;
+/* Dynamic segments */
+  DYNAMIC     PT_DYNAMIC;
+/* EBI segments */
+  BOOTUP      PT_LOAD;                    /* start-up code */
+  CODE        PT_LOAD;                    /* code */
+  CONST       PT_LOAD;                    /* read-only data */
+  DATA        PT_LOAD;                    /* read-write data */
+  SDATA       PT_LOAD;                    /* read-write small data */
+/* More EBI segments */
+  EBI_DATA_WT PT_LOAD FLAGS (0x40000000); /* cached write-thru data */
+  EBI_DATA_UN PT_LOAD FLAGS (0x80000000); /* uncached data */
+/* SMI segments */
+  SMI_CODE    PT_LOAD;                    /* cached and uncached code */
+  SMI_DATA    PT_LOAD;                    /* cached and cached write-back data */
+  SMI_DATA_WT PT_LOAD FLAGS (0x40000000); /* cached write-thru data */
+  SMI_DATA_UN PT_LOAD FLAGS (0x80000000); /* uncached data */
+/* TCM segments */
+  TCM_CODE    PT_LOAD FLAGS (0x20000000); /* cached and uncached code */
+  TCM_DATA    PT_LOAD FLAGS (0x20000000); /* cached and cached write-back data */
+  TCM_DATA_WT PT_LOAD FLAGS (0x60000000); /* cached write-thru data */
+  TCM_DATA_UN PT_LOAD FLAGS (0xa0000000); /* uncached data */
+}
+SECTIONS
+{
+  /* Read-only sections, merged into text segment: */
+  PROVIDE (__executable_start = SEGMENT_START("text-segment", 0)); . = SEGMENT_START("text-segment", 0);
+/* Start EBI memory. */
+  __ebi_va_start__ = ALIGN ((DEFINED (EBI_VA_START) ? EBI_VA_START : .), CONSTANT (MAXPAGESIZE));
+  __ebi_pa_start__ = ALIGN ((DEFINED (EBI_PA_START) ? EBI_PA_START : .), CONSTANT (MAXPAGESIZE));
+  . = __ebi_va_start__;
+  __ebi_start = __ebi_pa_start__;
+  .interp         : AT (__ebi_pa_start__ + ADDR (.interp) - __ebi_va_start__)
+                     { *(.interp) }
+  .note.gnu.build-id :  { *(.note.gnu.build-id) }
+  .hash           : AT (__ebi_pa_start__ + ADDR (.hash)     - __ebi_va_start__) { *(.hash) }
+  .gnu.hash       : AT (__ebi_pa_start__ + ADDR (.gnu.hash) - __ebi_va_start__) { *(.gnu.hash) }
+  .dynsym         : AT (__ebi_pa_start__ + ADDR (.dynsym)   - __ebi_va_start__) { *(.dynsym) }
+  .dynstr         : AT (__ebi_pa_start__ + ADDR (.dynstr)   - __ebi_va_start__) { *(.dynstr) }
+  .gnu.version    : AT (__ebi_pa_start__ + ADDR (.gnu.version)   - __ebi_va_start__) { *(.gnu.version) }
+  .gnu.version_d  : AT (__ebi_pa_start__ + ADDR (.gnu.version_d) - __ebi_va_start__) { *(.gnu.version_d) }
+  .gnu.version_r  : AT (__ebi_pa_start__ + ADDR (.gnu.version_r) - __ebi_va_start__) { *(.gnu.version_r) }
+  .rela.init      : AT (__ebi_pa_start__ + ADDR (.rela.init) - __ebi_va_start__) { *(.rela.init) }
+  .rela.text      : AT (__ebi_pa_start__ + ADDR (.rela.text) - __ebi_va_start__) { *(.rela.text .rela.text.* .rela.gnu.linkonce.t.*) }
+  .rela.fini      : AT (__ebi_pa_start__ + ADDR (.rela.fini) - __ebi_va_start__) { *(.rela.fini) }
+  .rela.rodata    : AT (__ebi_pa_start__ + ADDR (.rela.rodata) - __ebi_va_start__) { *(.rela.rodata .rela.rodata.* .rela.gnu.linkonce.r.*) }
+  .rela.data.rel.ro   : AT (__ebi_pa_start__ + ADDR (.rela.data.rel.ro) - __ebi_va_start__) { *(.rela.data.rel.ro* .rela.gnu.linkonce.d.rel.ro.*) }
+  .rela.data      : AT (__ebi_pa_start__ + ADDR (.rela.data) - __ebi_va_start__) { *(.rela.data .rela.data.* .rela.gnu.linkonce.d.*) }
+  .rela.tdata	  : AT (__ebi_pa_start__ + ADDR (.rela.tdata) - __ebi_va_start__) { *(.rela.tdata .rela.tdata.* .rela.gnu.linkonce.td.*) }
+  .rela.tbss	  : AT (__ebi_pa_start__ + ADDR (.rela.tbss) - __ebi_va_start__) { *(.rela.tbss .rela.tbss.* .rela.gnu.linkonce.tb.*) }
+  .rela.ctors     : AT (__ebi_pa_start__ + ADDR (.rela.ctors) - __ebi_va_start__) { *(.rela.ctors) }
+  .rela.dtors     : AT (__ebi_pa_start__ + ADDR (.rela.dtors) - __ebi_va_start__) { *(.rela.dtors) }
+  .rela.got       : AT (__ebi_pa_start__ + ADDR (.rela.got) - __ebi_va_start__) { *(.rela.got) }
+  .rela.sdata     : AT (__ebi_pa_start__ + ADDR (.rela.sdata) - __ebi_va_start__) { *(.rela.sdata .rela.lit[a48] .rela.sdata.* .rela.lit[a48].* .rela.gnu.linkonce.s.* .rela.gnu.linkonce.l[a48].*) }
+  .rela.sbss      : AT (__ebi_pa_start__ + ADDR (.rela.sbss) - __ebi_va_start__) { *(.rela.sbss .rela.sbss.* .rela.gnu.linkonce.sb.*) }
+  .rela.sdata2    : AT (__ebi_pa_start__ + ADDR (.rela.sdata2) - __ebi_va_start__) { *(.rela.sdata2 .rela.sdata2.* .rela.gnu.linkonce.s2.*) }
+  .rela.sbss2     : AT (__ebi_pa_start__ + ADDR (.rela.sbss2) - __ebi_va_start__) { *(.rela.sbss2 .rela.sbss2.* .rela.gnu.linkonce.sb2.*) }
+  .rela.bss       : AT (__ebi_pa_start__ + ADDR (.rela.bss) - __ebi_va_start__) { *(.rela.bss .rela.bss.* .rela.gnu.linkonce.b.*) }
+  .rela.iplt      : AT (__ebi_pa_start__ + ADDR (.rela.iplt) - __ebi_va_start__)
+    {
+      PROVIDE_HIDDEN (__rela_iplt_start = .);
+      *(.rela.iplt)
+      PROVIDE_HIDDEN (__rela_iplt_end = .);
+    }
+  .rela.plt       : AT (__ebi_pa_start__ + ADDR (.rela.plt) - __ebi_va_start__)
+    {
+      *(.rela.plt)
+    }
+/* Code starts. */
+  . = ALIGN (DEFINED (TEXTALIGN) ? (TEXTALIGN * 1K) : CONSTANT (MAXPAGESIZE));
+  . = ALIGN (DEFINED (EBI_CODE_CACHED_ALIGN) ? EBI_CODE_CACHED_ALIGN : CONSTANT (MAXPAGESIZE));
+  .BOOTUP : {} :BOOTUP
+  .start          : AT (__ebi_pa_start__ + ADDR (.start) - __ebi_va_start__)
+  {
+    KEEP (*(.start))
+  } =0x00c0007f
+  .CODE : {} :CODE
+  .init           : AT (__ebi_pa_start__ + ADDR (.init) - __ebi_va_start__)
+  {
+    KEEP (*(.init))
+  } =0x00c0007f
+  .plt            : AT (__ebi_pa_start__ + ADDR (.plt) - __ebi_va_start__) { *(.plt) }
+  .iplt           : AT (__ebi_pa_start__ + ADDR (.iplt) - __ebi_va_start__) { *(.iplt) }
+  . = ALIGN (. + CONSTANT (COMMONPAGESIZE), CONSTANT (COMMONPAGESIZE));
+  .text           : AT (__ebi_pa_start__ + ADDR (.text) - __ebi_va_start__)
+  {
+    *(.text.unlikely .text.*_unlikely)
+    *(.text.hot .text.hot.* .gnu.linkonce.t.hot.*)
+    *(.text .stub .text.* .gnu.linkonce.t.*)
+    /* .gnu.warning sections are handled specially by elf32.em.  */
+    *(.gnu.warning)
+  } =0x00c0007f
+  .fini           : AT (__ebi_pa_start__ + ADDR (.fini) - __ebi_va_start__)
+  {
+    KEEP (*(.fini))
+  } =0x00c0007f
+  PROVIDE (__etext = .);
+  PROVIDE (_etext = .);
+  PROVIDE (etext = .);
+/* Constants start. */
+  . = ALIGN (. + CONSTANT (COMMONPAGESIZE), CONSTANT (COMMONPAGESIZE));
+  . = ALIGN (DEFINED (EBI_DATA_CACHED_ALIGN) ? EBI_DATA_CACHED_ALIGN : CONSTANT (MAXPAGESIZE));
+  .CONST : {} :CONST
+  .rodata         : AT (__ebi_pa_start__ + ADDR (.rodata) - __ebi_va_start__)
+        {
+          *(.rodata.hot .rodata.hot.* .gnu.linkonce.r.hot.*)
+          *(.rodata .rodata.* .gnu.linkonce.r.*)
+        }
+  .rodata1        : AT (__ebi_pa_start__ + ADDR (.rodata1) - __ebi_va_start__) { *(.rodata1) }
+  .eh_frame_hdr   : AT (__ebi_pa_start__ + ADDR (.eh_frame_hdr) - __ebi_va_start__) { *(.eh_frame_hdr) }
+  .eh_frame       : AT (__ebi_pa_start__ + ADDR (.eh_frame) - __ebi_va_start__) ONLY_IF_RO { KEEP (*(.eh_frame)) }
+  .gcc_except_table   : AT (__ebi_pa_start__ + ADDR (.gcc_except_table) - __ebi_va_start__) ONLY_IF_RO { *(.gcc_except_table .gcc_except_table.*) }
+/* Data start. */
+  /* Adjust the address for the data segment.  We want to adjust up to
+     the same address within the page on the next page up.  */
+  . = ALIGN (CONSTANT (MAXPAGESIZE)) - ((CONSTANT (MAXPAGESIZE) - .) & (CONSTANT (MAXPAGESIZE) - 1)); . = DATA_SEGMENT_ALIGN (CONSTANT (MAXPAGESIZE), CONSTANT (COMMONPAGESIZE));
+  . = ALIGN (DEFINED (DATAALIGN) ? (DATAALIGN * 1K) : CONSTANT (MAXPAGESIZE));
+  . = ALIGN (DEFINED (EBI_DATA_CACHED_ALIGN) ? EBI_DATA_CACHED_ALIGN : CONSTANT (MAXPAGESIZE));
+  .DATA : {} :DATA
+  /* Exception handling  */
+  .eh_frame       : AT (__ebi_pa_start__ + ADDR (.eh_frame) - __ebi_va_start__) ONLY_IF_RW { KEEP (*(.eh_frame)) }
+  .gcc_except_table   : AT (__ebi_pa_start__ + ADDR (.gcc_except_table) - __ebi_va_start__) ONLY_IF_RW { *(.gcc_except_table .gcc_except_table.*) }
+  /* Thread Local Storage sections  */
+  .tdata	  : AT (__ebi_pa_start__ + ADDR (.tdata) - __ebi_va_start__) { *(.tdata .tdata.* .gnu.linkonce.td.*) }
+  .tbss		  : AT (__ebi_pa_start__ + ADDR (.tbss) - __ebi_va_start__) { *(.tbss .tbss.* .gnu.linkonce.tb.*) *(.tcommon) }
+  .preinit_array     : AT (__ebi_pa_start__ + ADDR (.preinit_array) - __ebi_va_start__)
+  {
+    PROVIDE_HIDDEN (__preinit_array_start = .);
+    KEEP (*(.preinit_array))
+    PROVIDE_HIDDEN (__preinit_array_end = .);
+  }
+  .init_array     : AT (__ebi_pa_start__ + ADDR (.init_array) - __ebi_va_start__)
+  {
+     PROVIDE_HIDDEN (__init_array_start = .);
+     KEEP (*(SORT(.init_array.*)))
+     KEEP (*(.init_array))
+     PROVIDE_HIDDEN (__init_array_end = .);
+  }
+  .fini_array     : AT (__ebi_pa_start__ + ADDR (.fini_array) - __ebi_va_start__)
+  {
+    PROVIDE_HIDDEN (__fini_array_start = .);
+    KEEP (*(.fini_array))
+    KEEP (*(SORT(.fini_array.*)))
+    PROVIDE_HIDDEN (__fini_array_end = .);
+  }
+  .ctors          :  AT (__ebi_pa_start__ + ADDR (.ctors) - __ebi_va_start__)
+  {
+    /* gcc uses crtbegin.o to find the start of
+       the constructors, so we make sure it is
+       first.  Because this is a wildcard, it
+       doesn't matter if the user does not
+       actually link against crtbegin.o; the
+       linker won't look for a file to match a
+       wildcard.  The wildcard also means that it
+       doesn't matter which directory crtbegin.o
+       is in.  */
+    KEEP (*crtbegin.o(.ctors))
+    KEEP (*crtbegin?.o(.ctors))
+    /* We don't want to include the .ctor section from
+       the crtend.o file until after the sorted ctors.
+       The .ctor section from the crtend file contains the
+       end of ctors marker and it must be last */
+    KEEP (*(EXCLUDE_FILE (*crtend.o *crtend?.o fini.o) .ctors))
+    KEEP (*(SORT(.ctors.*)))
+    KEEP (*(.ctors))
+  }
+  .dtors          : AT (__ebi_pa_start__ + ADDR (.dtors) - __ebi_va_start__)
+  {
+    KEEP (*crtbegin.o(.dtors))
+    KEEP (*crtbegin?.o(.dtors))
+    KEEP (*(EXCLUDE_FILE (*crtend.o *crtend?.o fini.o) .dtors))
+    KEEP (*(SORT(.dtors.*)))
+    KEEP (*(.dtors))
+  }
+  .jcr            : AT (__ebi_pa_start__ + ADDR (.jcr) - __ebi_va_start__) { KEEP (*(.jcr)) }
+  .data.rel.ro    :  { *(.data.rel.ro.local* .gnu.linkonce.d.rel.ro.local.*) *(.data.rel.ro* .gnu.linkonce.d.rel.ro.*) }
+  .dynamic        : AT (__ebi_pa_start__ + ADDR (.dynamic) - __ebi_va_start__) { *(.dynamic) }
+  .got            : AT (__ebi_pa_start__ + ADDR (.got) - __ebi_va_start__) { *(.got) *(.igot) }
+  . = DATA_SEGMENT_RELRO_END (16, .);
+  .got.plt        : AT (__ebi_pa_start__ + ADDR (.got.plt) - __ebi_va_start__) { *(.got.plt)  *(.igot.plt) }
+  .data           : AT (__ebi_pa_start__ + ADDR (.data) - __ebi_va_start__)
+  {
+    *(.data.hot .data.hot.* .gnu.linkonce.d.hot.*)
+    *(.data .data.* .gnu.linkonce.d.*)
+    SORT(CONSTRUCTORS)
+  }
+  .data1          : AT (__ebi_pa_start__ + ADDR (.data1) - __ebi_va_start__) { *(.data1) }
+  _edata = .; PROVIDE (edata = .);
+  . = ALIGN (64);
+  __bss_start = .;
+  .bss            : AT (__ebi_pa_start__ + ADDR (.bss) - __ebi_va_start__)
+  {
+   *(.dynbss)
+   *(.bss.hot .bss.hot.* .gnu.linkonce.b.hot.*)
+   *(.bss .bss.* .gnu.linkonce.b.*)
+   *(COMMON)
+   /* Align here to ensure that the .bss section occupies space up to
+      _end.  Align after .bss to ensure correct alignment even if the
+      .bss section disappears because there are no input sections. */
+   . = ALIGN (. != 0 ? 64 : 1);
+  }
+  . = ALIGN (64);
+  _end = .;
+  . = ALIGN (DEFINED (EBI_DATA_CACHED_WT_ALIGN) ? EBI_DATA_CACHED_WT_ALIGN : CONSTANT (MAXPAGESIZE));
+  .ebi_data_cached_wt : AT (__ebi_pa_start__ + ADDR (.ebi_data_cached_wt) - __ebi_va_start__)
+  { *(.ebi_data_cached_wt .ebi_data_cached_wt.*) } :EBI_DATA_WT
+  . = ALIGN (DEFINED (EBI_DATA_UNCACHED_ALIGN) ? EBI_DATA_UNCACHED_ALIGN : CONSTANT (MAXPAGESIZE));
+  .ebi_data_uncached : AT (__ebi_pa_start__ + ADDR (.ebi_data_uncached) - __ebi_va_start__)
+  { *(.ebi_data_uncached .ebi_data_uncached.*) } :EBI_DATA_UN
+/* Small data start. */
+  . = ALIGN (DEFINED (DATAALIGN) ? (DATAALIGN * 1K) : CONSTANT (MAXPAGESIZE));
+  . = ALIGN (DEFINED (EBI_DATA_CACHED_ALIGN) ? EBI_DATA_CACHED_ALIGN : CONSTANT (MAXPAGESIZE));
+  .SDATA : {} :SDATA
+  . = ALIGN (64);
+  .sdata          : AT (__ebi_pa_start__ + ADDR (.sdata) - __ebi_va_start__)
+  {
+    PROVIDE (_SDA_BASE_ = .);
+    *(.sdata.1.8 .sdata.1.8.* .gnu.linkonce.s.1.8.*)
+    *(.sbss.1.8 .sbss.1.8.* .gnu.linkonce.sb.1.8.*)
+    *(.scommon.1.8 .scommon.1.8.*)
+    *(.sdata.1.4 .sdata.1.4.* .gnu.linkonce.s.1.4.*)
+    *(.sbss.1.4 .sbss.1.4.* .gnu.linkonce.sb.1.4.*)
+    *(.scommon.1.4 .scommon.1.4.*)
+    *(.sdata.1.2 .sdata.1.2.* .gnu.linkonce.s.1.2.*)
+    *(.sbss.1.2 .sbss.1.2.* .gnu.linkonce.sb.1.2.*)
+    *(.scommon.1.2 .scommon.1.2.*)
+    *(.sdata.1.1 .sdata.1.1.* .gnu.linkonce.s.1.1.*)
+    *(.sbss.1.1 .sbss.1.1.* .gnu.linkonce.sb.1.1.*)
+    *(.scommon.1.1 .scommon.1.1.*)
+    *(.sdata.1 .sdata.1.* .gnu.linkonce.s.1.*)
+    *(.sbss.1 .sbss.1.* .gnu.linkonce.sb.1.*)
+    *(.scommon.1 .scommon.1.*)
+    *(.sdata.2.8 .sdata.2.8.* .gnu.linkonce.s.2.8.*)
+    *(.sbss.2.8 .sbss.2.8.* .gnu.linkonce.sb.2.8.*)
+    *(.scommon.2.8 .scommon.2.8.*)
+    *(.sdata.2.4 .sdata.2.4.* .gnu.linkonce.s.2.4.*)
+    *(.sbss.2.4 .sbss.2.4.* .gnu.linkonce.sb.2.4.*)
+    *(.scommon.2.4 .scommon.2.4.*)
+    *(.sdata.2.2 .sdata.2.2.* .gnu.linkonce.s.2.2.*)
+    *(.sbss.2.2 .sbss.2.2.* .gnu.linkonce.sb.2.2.*)
+    *(.scommon.2.2 .scommon.2.2.*)
+    *(.sdata.2 .sdata.2.* .gnu.linkonce.s.2.*)
+    *(.sbss.2 .sbss.2.* .gnu.linkonce.sb.2.*)
+    *(.scommon.2 .scommon.2.*)
+    *(.sdata.4.8 .sdata.4.8.* .gnu.linkonce.s.4.8.*)
+    *(.sbss.4.8 .sbss.4.8.* .gnu.linkonce.sb.4.8.*)
+    *(.scommon.4.8 .scommon.4.8.*)
+    *(.sdata.4.4 .sdata.4.4.* .gnu.linkonce.s.4.4.*)
+    *(.sbss.4.4 .sbss.4.4.* .gnu.linkonce.sb.4.4.*)
+    *(.scommon.4.4 .scommon.4.4.*)
+    *(.sdata.4 .sdata.4.* .gnu.linkonce.s.4.*)
+    *(.sbss.4 .sbss.4.* .gnu.linkonce.sb.4.*)
+    *(.scommon.4 .scommon.4.*)
+    *(.lit[a4] .lit[a4].* .gnu.linkonce.l[a4].*)
+    *(.sdata.8.8 .sdata.8.8.* .gnu.linkonce.s.8.8.*)
+    *(.sbss.8.8 .sbss.8.8.* .gnu.linkonce.sb.8.8.*)
+    *(.scommon.8.8 .scommon.8.8.*)
+    *(.sdata.8 .sdata.8.* .gnu.linkonce.s.8.*)
+    *(.sbss.8 .sbss.8.* .gnu.linkonce.sb.8.*)
+    *(.scommon.8 .scommon.8.*)
+    *(.lit8 .lit8.* .gnu.linkonce.l8.*)
+    *(.sdata.hot .sdata.hot.* .gnu.linkonce.s.hot.*)
+    *(.sdata .sdata.* .gnu.linkonce.s.*)
+  }
+  .got            : AT (__ebi_pa_start__ + ADDR (.got) - __ebi_va_start__) { *(.got) *(.igot) }
+  .sdata2         : AT (__ebi_pa_start__ + ADDR (.sdata2) - __ebi_va_start__)
+    {
+      *(.sdata2 .sdata2.* .gnu.linkonce.s2.*)
+    }
+  .sbss2          : AT (__ebi_pa_start__ + ADDR (.sbss2) - __ebi_va_start__)
+  { *(.sbss2 .sbss2.* .gnu.linkonce.sb2.*) }
+  . = ALIGN (64);
+  .sbss           : AT (__ebi_pa_start__ + ADDR (.sbss) - __ebi_va_start__)
+  {
+    PROVIDE (__sbss_start = .);
+    PROVIDE (___sbss_start = .);
+    *(.dynsbss)
+    *(.sbss.hot .sbss.hot.* .gnu.linkonce.sb.hot.*)
+    *(.sbss .sbss.* .gnu.linkonce.sb.*)
+    *(.scommon .scommon.*)
+    . = ALIGN (. != 0 ? 64 : 1);
+    PROVIDE (__sbss_end = .);
+    PROVIDE (___sbss_end = .);
+  }
+  . = ALIGN (64);
+  PROVIDE (end = .);
+  . = DATA_SEGMENT_END (.);
+  __ebi_end = __ebi_pa_start__ + . - __ebi_va_start__;
+/* Start SMI memory. */
+  __smi_va_start__ = ALIGN ((DEFINED (SMI_VA_START) ? SMI_VA_START : .), CONSTANT (MAXPAGESIZE));
+  __smi_pa_start__ = ALIGN ((DEFINED (SMI_PA_START) ? SMI_PA_START : .), CONSTANT (MAXPAGESIZE));
+  . = __smi_va_start__;
+  __smi_start = __smi_pa_start__;
+  . = ALIGN (DEFINED (SMI_CODE_CACHED_ALIGN) ? SMI_CODE_CACHED_ALIGN : CONSTANT (MAXPAGESIZE));
+  . = ALIGN (DEFINED (SMI_CODE_UNCACHED_ALIGN) ? SMI_CODE_UNCACHED_ALIGN : CONSTANT (MAXPAGESIZE));
+  .smi_code_cached : AT (__smi_pa_start__ + ADDR (.smi_code_cached) - __smi_va_start__)
+  {
+    *(.smi_code_cached .smi_code_cached.*)
+    *(.smi_code_cached_wb .smi_code_cached_wb.*)
+    *(.smi_code_cached_wt .smi_code_cached_wt.*)
+    *(.smi_code_uncached .smi_code_uncached.*)
+  } :SMI_CODE =0x00c0007f
+  . = ALIGN (DEFINED (SMI_DATA_CACHED_ALIGN) ? SMI_DATA_CACHED_ALIGN : CONSTANT (MAXPAGESIZE));
+  . = ALIGN (DEFINED (SMI_DATA_CACHED_WB_ALIGN) ? SMI_DATA_CACHED_WB_ALIGN : CONSTANT (MAXPAGESIZE));
+  .smi_data_cached : AT (__smi_pa_start__ + ADDR (.smi_data_cached) - __smi_va_start__)
+  {
+    *(.smi_data_cached .smi_data_cached.*)
+    *(.smi_data_cached_wb .smi_data_cached_wb.*)
+  } :SMI_DATA
+  . = ALIGN (DEFINED (SMI_DATA_CACHED_WT_ALIGN) ? SMI_DATA_CACHED_WT_ALIGN : CONSTANT (MAXPAGESIZE));
+  .smi_data_cached_wt : AT (__smi_pa_start__ + ADDR (.smi_data_cached_wt) - __smi_va_start__)
+  { *(.smi_data_cached_wt .smi_data_cached_wt.*) } :SMI_DATA_WT
+  . = ALIGN (DEFINED (SMI_DATA_UNCACHED_ALIGN) ? SMI_DATA_UNCACHED_ALIGN : CONSTANT (MAXPAGESIZE));
+  .smi_data_uncached : AT (__smi_pa_start__ + ADDR (.smi_data_uncached) - __smi_va_start__)
+  { *(.smi_data_uncached .smi_data_uncached.*) } :SMI_DATA_UN
+  __smi_end = __smi_pa_start__ + . - __smi_va_start__;
+/* Start TCM memory. */
+  __tcm_va_start__ = ALIGN ((DEFINED (TCM_VA_START) ? TCM_VA_START : 0xd8000000), CONSTANT (MAXPAGESIZE));
+  __tcm_pa_start__ = ALIGN ((DEFINED (TCM_PA_START) ? TCM_PA_START : 0xd8000000), CONSTANT (MAXPAGESIZE));
+  . = __tcm_va_start__;
+  __tcm_start = __tcm_pa_start__;
+  . = ALIGN (DEFINED (TCM_CODE_CACHED_ALIGN) ? TCM_CODE_CACHED_ALIGN : CONSTANT (MAXPAGESIZE));
+  . = ALIGN (DEFINED (TCM_CODE_UNCACHED_ALIGN) ? TCM_CODE_UNCACHED_ALIGN : CONSTANT (MAXPAGESIZE));
+  .tcm_code_cached : AT (__tcm_pa_start__ + ADDR (.tcm_code_cached) - __tcm_va_start__)
+  {
+    *(.tcm_code_cached .tcm_code_cached.*)
+    *(.tcm_code_cached_wb .tcm_code_cached_wb.*)
+    *(.tcm_code_cached_wt .tcm_code_cached_wt.*)
+    *(.tcm_code_uncached .tcm_code_uncached.*)
+  } :TCM_CODE =0x00c0007f
+  . = ALIGN (DEFINED (TCM_DATA_CACHED_ALIGN) ? TCM_DATA_CACHED_ALIGN : CONSTANT (MAXPAGESIZE));
+  . = ALIGN (DEFINED (TCM_DATA_CACHED_WB_ALIGN) ? TCM_DATA_CACHED_WB_ALIGN : CONSTANT (MAXPAGESIZE));
+  .tcm_data_cached : AT (__tcm_pa_start__ + ADDR (.tcm_data_cached) - __tcm_va_start__)
+  {
+    *(.tcm_data_cached .tcm_data_cached.*)
+    *(.tcm_data_cached_wb .tcm_data_cached_wb.*)
+  } :TCM_DATA
+  . = ALIGN (DEFINED (TCM_DATA_CACHED_WT_ALIGN) ? TCM_DATA_CACHED_WT_ALIGN : CONSTANT (MAXPAGESIZE));
+  .tcm_data_cached_wt : AT (__tcm_pa_start__ + ADDR (.tcm_data_cached_wt) - __tcm_va_start__)
+  { *(.tcm_data_cached_wt .tcm_data_cached_wt.*) } :TCM_DATA_WT
+  . = ALIGN (DEFINED (TCM_DATA_UNCACHED_ALIGN) ? TCM_DATA_UNCACHED_ALIGN : CONSTANT (MAXPAGESIZE));
+  .tcm_data_uncached : AT (__tcm_pa_start__ + ADDR (.tcm_data_uncached) - __tcm_va_start__)
+  { *(.tcm_data_uncached .tcm_data_uncached.*) } :TCM_DATA_UN
+  __tcm_end = __tcm_pa_start__ + . - __tcm_va_start__;
+  /* Stabs debugging sections.  */
+  .stab          0 :  { *(.stab) }
+  .stabstr       0 :  { *(.stabstr) }
+  .stab.excl     0 :  { *(.stab.excl) }
+  .stab.exclstr  0 :  { *(.stab.exclstr) }
+  .stab.index    0 :  { *(.stab.index) }
+  .stab.indexstr 0 :  { *(.stab.indexstr) }
+  .comment       0 :  { *(.comment) }
+  /* DWARF debug sections.
+     Symbols in the DWARF debugging sections are relative to the beginning
+     of the section so we begin them at 0.  */
+  /* DWARF 1 */
+  .debug          0 :  { *(.debug) }
+  .line           0 :  { *(.line) }
+  /* GNU DWARF 1 extensions */
+  .debug_srcinfo  0 :  { *(.debug_srcinfo) }
+  .debug_sfnames  0 :  { *(.debug_sfnames) }
+  /* DWARF 1.1 and DWARF 2 */
+  .debug_aranges  0 :  { *(.debug_aranges) }
+  .debug_pubnames 0 :  { *(.debug_pubnames) }
+  /* DWARF 2 */
+  .debug_info     0 :  { *(.debug_info .gnu.linkonce.wi.*) }
+  .debug_abbrev   0 :  { *(.debug_abbrev) }
+  .debug_line     0 :  { *(.debug_line) }
+  .debug_frame    0 :  { *(.debug_frame) }
+  .debug_str      0 :  { *(.debug_str) }
+  .debug_loc      0 :  { *(.debug_loc) }
+  .debug_macinfo  0 :  { *(.debug_macinfo) }
+  /* SGI/MIPS DWARF 2 extensions */
+  .debug_weaknames 0 :  { *(.debug_weaknames) }
+  .debug_funcnames 0 :  { *(.debug_funcnames) }
+  .debug_typenames 0 :  { *(.debug_typenames) }
+  .debug_varnames  0 :  { *(.debug_varnames) }
+  /* DWARF 3 */
+  .debug_pubtypes 0 :  { *(.debug_pubtypes) }
+  .debug_ranges   0 :  { *(.debug_ranges) }
+  .gnu.attributes 0 :  { KEEP (*(.gnu.attributes)) }
+  /DISCARD/       :  { *(.note.GNU-stack) *(.gnu_debuglink) *(.gnu.lto_*) }
+}

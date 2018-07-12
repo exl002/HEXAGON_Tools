@@ -1,0 +1,97 @@
+<html lang="en">
+<head>
+<title>Hexagon-Opts - Using as</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Using as">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="Hexagon_002dDependent.html#Hexagon_002dDependent" title="Hexagon-Dependent">
+<link rel="next" href="Hexagon_002dDirectives.html#Hexagon_002dDirectives" title="Hexagon-Directives">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+This file documents the GNU Assembler "as".
+
+Copyright (C) 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
+2000, 2001, 2002, 2006, 2007, 2008, 2009, 2010, 2011 Free Software Foundation,
+Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, with no Front-Cover Texts, and with no
+Back-Cover Texts.  A copy of the license is included in the
+section entitled ``GNU Free Documentation License''.
+
+-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+<link rel="stylesheet" type="text/css" href="../cs.css">
+</head>
+<body>
+<div class="node">
+<a name="Hexagon-Opts"></a>
+<a name="Hexagon_002dOpts"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Hexagon_002dDirectives.html#Hexagon_002dDirectives">Hexagon-Directives</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="Hexagon_002dDependent.html#Hexagon_002dDependent">Hexagon-Dependent</a>
+<hr>
+</div>
+
+<h4 class="subsection">9.11.1 Hexagon Options</h4>
+
+<p><a name="index-options_002c-Hexagon-837"></a><a name="index-Hexagon-options-838"></a>The Qualcomm Hexagon version of <code>as</code> has a few machine
+dependent options:
+
+     
+<a name="index-g_t_0040code_007b_002dG_007d-option_002c-Hexagon-839"></a>
+<dl><dt><code>-G </code><var>size</var><dd>Set the maximum size of objects in the small-data area, accessible via
+the GP register, to <var>size</var> (default is 8).
+
+     <p><a name="index-g_t_0040code_007b_002dmarch_003d_007d-option_002c-Hexagon-840"></a><br><dt><code>-march=</code><var>version</var><dd>Generate code for the specified Hexagon version. 
+The following version names are valid:
+<code>v2</code>, <code>v3</code>, <code>v4</code>, and <code>v5</code>.
+
+     <p><a name="index-g_t_0040code_007b_002dmcpu_003d_007d-option_002c-Hexagon-841"></a><br><dt><code>-mcpu=</code><var>version</var><dd>Equivalent to <code>-march=</code><var>version</var>.
+
+     <p><a name="index-g_t_0040code_007b_002dmv2_007d-option_002c-Hexagon-842"></a><a name="index-g_t_0040code_007b_002dmv3_007d-option_002c-Hexagon-843"></a><a name="index-g_t_0040code_007b_002dmv4_007d-option_002c-Hexagon-844"></a><a name="index-g_t_0040code_007b_002dmv5_007d-option_002c-Hexagon-845"></a><br><dt><code>-mv2</code><dt><code>-mv3</code><dt><code>-mv4</code><dt><code>-mv5</code><dd>Generate code for the given Hexagon version.  Equivalent to the corresponding
+<code>-march</code> option.
+
+     <p><a name="index-g_t_0040code_007b_002dmno_002ddealloc_005freturn_007d-option_002c-Hexagon-846"></a><br><dt><code>-mno-dealloc_return</code><dd>Disable use of the dealloc_return instruction in Hexagon V4 and later.
+
+     <p><a name="index-g_t_0040code_007b_002dmno_002dextender_007d-option_002c-Hexagon-847"></a><br><dt><code>-mno-extender</code><dd>Disable the use of constant extenders in Hexagon V4 and V5.
+
+     <p><a name="index-g_t_0040code_007b_002dmfalign_002dinfo_007d-option_002c-Hexagon-848"></a><br><dt><code>-mfalign-info</code><dd>Report statistics for the effects of the directive <code>.falign</code>.
+
+     <p><a name="index-g_t_0040code_007b_002dmfalign_002dwarn_007d-option_002c-Hexagon-849"></a><br><dt><code>-mfalign-warn</code><dd>Warn when the directive <code>.falign</code> results in padding instructions
+being added.
+
+     <p><a name="index-g_t_0040code_007b_002dmno_002djumps_007d-option_002c-Hexagon-850"></a><br><dt><code>-mno-jumps</code><dd>Disable automatic extension of some branch instructions in Hexagon V4 and V5.
+
+     <p><a name="index-g_t_0040code_007b_002dmno_002djumps_002dlong_007d-option_002c-Hexagon-851"></a><br><dt><code>-mno-jumps-long</code><dd>Disable automatic extension of long (non-paired)
+branch instructions in Hexagon V4 and V5.
+
+     <p><a name="index-g_t_0040code_007b_002dmno_002dpairing_007d-option_002c-Hexagon-852"></a><br><dt><code>-mno-pairing</code><dd>Disable pairing of packet instructions in Hexagon V4 and V5.
+
+     <p><a name="index-g_t_0040code_007b_002dmno_002dpairing_002dbranch_007d-option_002c-Hexagon-853"></a><br><dt><code>-mno-pairing-branch</code><dd>Disable pairing of branch instructions in Hexagon V4 and V5.
+
+     <p><a name="index-g_t_0040code_007b_002dmno_002dpairing_002dduplex_007d-option_002c-Hexagon-854"></a><br><dt><code>-mno-pairing-duplex</code><dd>Disable pairing to duplex instructions in Hexagon V4 and V5.
+
+     <p><a name="index-g_t_0040code_007b_002dmpairing_002dinfo_007d-option_002c-Hexagon-855"></a><br><dt><code>-mpairing-info</code><dd>Report about instruction pairing in Hexagon V4 and V5.
+
+     <p><a name="index-g_t_0040code_007b_002dmsort_002dsda_007d-option_002c-Hexagon-856"></a><br><dt><code>-msort-sda</code><dd>Sort objects in the small-data area in ascending order by their access size. 
+<code>-mno-sort-sda</code> disables this default behavior.
+
+   </dl>
+
+   </body></html>
+

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ $# -eq 0 ]
+then
+echo "Usage: $0 exefile"
+exit
+fi
+
+hexagon-objdump -x $1 | fgrep "start address" | sed 's/start address \(.*\)/StartPC = \1;/'
+hexagon-objdump -h -w $1 | fgrep CODE | sed 's/  */ /g' | cut -f3,4,5 -d' ' | \
+	sed 's/\(.*\) \(.*\) \(.*\)/"\1" = 0x\3 - 0x\2;/' | \
+	awk '{ range_end = strtonum($3) + strtonum($5) - 1; printf "%s %s %s - 0x%x;\n", $1, $2, $3, range_end }'

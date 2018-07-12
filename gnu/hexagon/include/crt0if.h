@@ -1,0 +1,1 @@
+../../../qc/include/common/crt0if.h

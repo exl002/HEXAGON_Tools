@@ -1,0 +1,74 @@
+<html lang="en">
+<head>
+<title>Hexagon-Directives - Using as</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Using as">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="Hexagon_002dDependent.html#Hexagon_002dDependent" title="Hexagon-Dependent">
+<link rel="prev" href="Hexagon_002dOpts.html#Hexagon_002dOpts" title="Hexagon-Opts">
+<link rel="next" href="Hexagon_002dSyntax.html#Hexagon_002dSyntax" title="Hexagon-Syntax">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+This file documents the GNU Assembler "as".
+
+Copyright (C) 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
+2000, 2001, 2002, 2006, 2007, 2008, 2009, 2010, 2011 Free Software Foundation,
+Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, with no Front-Cover Texts, and with no
+Back-Cover Texts.  A copy of the license is included in the
+section entitled ``GNU Free Documentation License''.
+
+-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+<link rel="stylesheet" type="text/css" href="../cs.css">
+</head>
+<body>
+<div class="node">
+<a name="Hexagon-Directives"></a>
+<a name="Hexagon_002dDirectives"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Hexagon_002dSyntax.html#Hexagon_002dSyntax">Hexagon-Syntax</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Hexagon_002dOpts.html#Hexagon_002dOpts">Hexagon-Opts</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="Hexagon_002dDependent.html#Hexagon_002dDependent">Hexagon-Dependent</a>
+<hr>
+</div>
+
+<h4 class="subsection">9.11.2 Hexagon Machine Directives</h4>
+
+<p><a name="index-machine-directives_002c-Hexagon-857"></a><a name="index-Hexagon-machine-directives-858"></a>
+     
+<a name="index-g_t_0040code_007b_002efalign_007d-directive_002c-Hexagon-859"></a>
+<dl><dt><code>.falign</code><dd>The <code>.falign</code> directive guarantees that the next instruction packet does
+not cross a 16-byte address boundary, thereby avoiding a fetch stall, by adding
+NOP instructions to preceding instruction packets if necessary.
+
+     <p><a name="index-g_t_0040code_007b_002ecomm_007d-directive_002c-Hexagon-860"></a><br><dt><code>.comm</code><dd>The <code>.comm</code> directive accepts an additional optional
+argument that specifies the access size of global objects thus defined.  If
+omitted, then the natural access size for the object alignment is assumed.  When
+the option <code>-msort-sda</code> is specified, the objects in the
+small-data area are sorted in ascending order by their access sizes.
+
+     <p><a name="index-g_t_0040code_007b_002elcomm_007d-directive_002c-Hexagon-861"></a><br><dt><code>.lcomm</code><dd>The <code>.lcomm</code> directive accepts an additional optional
+argument that specifies the access size of local objects thus defined,
+similarly to <code>.comm</code>.
+
+   </dl>
+
+   </body></html>
+

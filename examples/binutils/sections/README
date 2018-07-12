@@ -1,0 +1,72 @@
+########################################################################
+# Copyright (c) Date: Tue Aug 26 16:38:28 CDT 2008 QUALCOMM INCORPORATED 
+# All Rights Reserved 
+# Modified by QUALCOMM INCORPORATED on Tue Aug 26 16:38:28 CDT 2008 
+########################################################################
+
+
+* Hexagon Memory Types
+
+The Hexagon processor supports different types of memory: EBI (main memory), TCM
+(fast on-chip memory) and SMI (external memory).  Unless otherwise specified, EBI memory is used by default.
+
+This example illustrates how to these different memory types in programs.
+
+* Hexagon Sections
+
+The Hexagon tools structures code and data into sections.  Sections are
+then put together by the linker to form relocatable objects and these to form
+executable objects.
+
+There are special code and data sections that the Hexagon tools map into
+its different memory types.  See the Hexagon Tools User Guide for more details.
+
+* Using Sections
+
+The Hexagon tools allow the programmer to specify which section where either
+code or data will be placed.
+
+The compilers provide the attribute "section": "__attribute__ ((section ("SECTION")))"
+
+For example:
+
+	void foo (void);
+	void bar (void) __attribute__ ((section (".smi_code_cached")));
+
+	int a;
+	int b __attribute__ ((section (".tcm_data_cached_wt")));
+
+	void foo (void)
+	{
+	  a = b;
+	}
+
+	void bar (void)
+	{
+	  b = a;
+	}
+
+This places the function "bar" in SMI memory and the variable "b" in TCM memory when build with the command below:
+
+	$CC -Wl,-tcm sectionc.c
+
+The assembler directive ".section" can be used similarly:
+
+	.section .tcm_code_cached, "ax", @progbits
+
+	.global	goo
+	.type	goo, @function
+goo:
+	jumpr	lr
+
+	.section .smi_data_uncached, "aw", @progbits
+
+	.global	c
+c:	.word	0
+
+This places the function "goo" in TCM memory and the variable "c" in SMI memory when assembled and linked with the commands below:
+
+	$AS sections.s -o sections.o
+	$LD -tcm sections.o
+
+Note that whenever the programmer wants to use the non-default memory type, the linker option "-tcm" must be used.

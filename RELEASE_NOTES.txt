@@ -1,0 +1,515 @@
+[*======================= COPYRIGHT NOTICE ======================*]
+[* Copyright 2014 QUALCOMM Incorporated.                         *]
+[* All rights reserved.                                          *]
+[*                                                               *]
+[* All data and information contained in or disclosed by this    *]
+[* document is confidental and proprietary information of        *]
+[* QUALCOMM Incorporated and all rights therein are expressly    *]
+[* reserved. By accepting this material the recipient agrees     *]
+[* that this material and the information contained therein is   *]
+[* held in confidence and in trust and will not be used, copied, *]
+[* reproduced in whole or in part, nor its contents revealed in  *]
+[* any manner to others without the express written permission   *]
+[* of QUALCOMM.                                                  *]
+[*===============================================================*]
+
+Hexagon Development Suite version 6.4.06 - Release Notes
+
+----------------------------------------------------------------------
+
+#### Overview ####
+- Overview
+- General
+- Known issues
+- Changes
+- Notices
+
+#### General ####
+
+Special Note: This release includes an alternative set of libraries
+located under "no-dealloc_return-libs".  To use them, one must explicitly link
+to them -- they are not automatically picked up by the linker.
+
+
+Please send all support questions and bug reports to
+llvm-hexagon-support@qualcomm.com
+
+This release is based on the LLVM.org Community Release 3.2, enhanced
+with optimizations from the Qualcomm LLVM team.  As a cross compiler,
+it runs on x86-64 Linux or Windows host and generates code for Hexagon
+targets.
+
+
+#### Known Issues ####
+None.
+
+#### Changes ####
+
+-- Release 6.4.06 ----
+
+Mentor release version: Sourcery CodeBench Lite 5.1 2012.03-150
+
+Linker:
+19807 trampoline may jump to the wrong location if a reused trampoline
+      moves out of range
+
+LLVM:
+18323 use correct alignment for certain auto initializers
+
+Resourceanalyzer:
+Change path to libcAidFile from current directory to ../etc/
+Support all tool chains from master- libcAidFile in ./bin or ../etc/
+Support multiple tool chains in path variable - search llvm first
+
+Simulator:
+9788 Change simulator Makefile to allow easy change of GCC path
+16529 Reduce repetitive useless printout in --interactive mode
+16684 Opening a file with no name crashes hexagon-sim
+16723 semihosting by hexagon-sim needs to translate V2P
+16827 simulator Makefile causes arch-lib to rebuild every time
+16880 sim sends bad packet response to ctrl-c when already at semihost bkpt
+17691 new feature bare-bone --pctrace_nano for debugging
+18402 Break out guest cycles in region-profiling
+18431 Simualator Makefile update
+18545 adds support in DRIL for 192-entry TLB
+18614 Create only one copy of coredump
+18659 simulator cosim file needs longer line size
+18674 simulator adds support for 3 new rev_id in arch_v56
+18727 Improve simulator built-in test : stdout/stderr tracking
+18817 remove windows style CR/LF from source code
+18908 not to use NUM_TLB_REGS in for arch_v56
+19013 Add support for -mv56x_768
+19196 Simulator reports wrong byte-offset for global regs
+19335 Simulator hung when stepping across a self-looping opcode
+19838 Remove unneeded opcode decode information
+
+-- Release 6.4.05 ----
+
+LLVM:
+15776 LLVM using system include paths
+17543 teach Lexer::findLocationAfterToken to handle \r\n etc
+17605 Insufficient aliasing check in store widening
+17629 Implement stack checker feature. No changes in codegen.
+      Clean up modem related save/restore stubs.
+17641 Don't reclaim nodes in use by bug reports
+17701 Split for duplex optimization incorrectly splitting packet
+17720 Invalid conversion of rcmp to predicate form
+17724 Disable automatic duplex splitting.
+17769 Remove -disable-duplexSplit from modem-sw
+17775 Added support for -mlong-calls to 6.4
+17802 Added scan-view and scan-build to Makefile
+17820 Comment parsing: actually check for a block command after "\param x"
+17830 Fix a crash with -Wassign-enum, ...
+
+Libraries:
+17629 MODEM: Implement stack checker feature.
+17908 disable problematic overloads for clang
+
+Simulator:
+15915 rev_id reported by simulator is not accepted
+16238 Cmdline parsing defect when using single dash
+17486 Improve simulator built-in test for arch tracking
+17508 Improve error message due to conflicting use of port num
+17623 Hide incomplete coredump behavior
+
+-- Release 6.4.04 ----
+
+LLVM:
+5128 Reinstate support for __builtin_prefetch.
+14213 Apply AliasSetTracker patch to 6.4.
+15078 fix various intrinsic 'cannot select' errors
+15796 Recognize "y = TFRI -1; AND x, y" in peephole
+16490 const64 with single vector load from memory instead of explicit
+      register assignments
+16491 llvm not doing tail call optimization for args to memory
+16857 reduce nops in modemsw: .balign 4,8,16
+16861 add group-less diags to high/medium/low
+16862 move isDuplexPair to HexagonInstrInfo
+16865 account for Duplexs when computing size of packet
+16881 Fix const64 default to not generate code differences for modemsw
+16882 Improve Tail Call debug output (reasons why we did not).
+16917 Missed duplex splitting opportunities
+16930 add duplex split, const64, and hexagon nops balign to modem-sw-size
+16931 Fix missing DEBUG around dbgs() from gerrit 24059
+16951 add flag to restrict duplex splitting to first block (default)
+16959 Missed duplex opportunities - fix hex failures when splitting all blocks.
+17002 Allow tail calls in presence of SExt/ZExt on a call whose type matches
+      the containing functions return type.
+17102 disable collocate for size reasons
+17103 enable duplex splitting for first block modemsw-size
+17104 enable aggresive-tail-calls (SExt/ZExt) for modem-sw-size
+17110 allow tail call for SExt/ZExt attribute differences
+17116 modem-sw-size enable tail calls attributes
+17140 Generate memops for values on the stack.
+17160 handle back-edges when extracting dests from phi
+17216 Backport patch to insert lifetime.start and lifetime.end markers
+17218 preserve lifetime markers after SimplifCFG and DiffAndMerge.
+17220 Inlining memcpy/memmove
+17226 add flag to control -Os callee save/restore threshold
+17247 Disable diff and merge region extraction inside a loop
+17256 Incorrect evaluation of NTSTBIT in hexagon bit tracker
+17257 Remove KILL instructions in Hexagon register cleanup
+17258 In bit-simplify, only place COPY instructions in dominating block
+17261 Separate foldable constant GEP chains in GEP commoning
+17263 Finalize pass order of bit-simplify and split-double-registers
+17280 Disable constant merging at -O3
+17284 add options to control shrink wrapping
+17285 Turn off generation of l2fetch
+17294 modem: absorb dimepm options (swsize++) into modem-sw preset.
+17295 (add merge-blocks=all and shrink-wrap)=all with loops=0 modem-sw-size
+17296 allow more than one instance of the four level options for modem
+17312 handle duplicate incoming blocks when comparing phis
+17336 move two loop=0 flags from modem-sw-size to modem-sw
+17339 Fix speculative pull up when pulling into a packet with only one
+      instruction and which is an uncond. branch.
+17354 Remove redundant -disable-pull-up flag from modem-sw
+17400 Set default spill function threshold for O3
+17410 disregard order when matching switch cases
+
+Simulator:
+15998 part.1 fix SWI handling for GET_CMDLINE
+16341 debug client going down triggers many simulator warnings
+16716 Simulator hangs when told to open a port in use
+16806 Remove dead code in apiVersion.(c/h)
+16884 build_tag.pl should omit git commit summary line
+16938 Simulator replied wrong thread id for qfThreadInfo
+16982 PMU event counters do not match when filtering is used
+17013 update BRANCH_v55 version of interactive_ref.56
+17017 HEX_DEBUG_WRITE_LOCKED missing when simulating for version > v5
+17074 Simulator error message stated the opposite
+17117 Simulator ignores T32 with all threads idle
+17120 Simulator entry-point configuration problem
+17314 No effect when opcode nmi sends NMI to threads in wait state
+17316 region profiling shows same # packets  as # instructions
+
+Trace32:
+16792 Correct version string
+
+-- Release 6.4.03 ----
+
+LLVM:
+13078 Do not generate debug info for implicit members of a class.
+13200 Modemsw Codesize memops not being used.
+13386 Switch-to-lookup tables: Don't req a res for the default
+13399 Run merge func and shrink wrap at -Os only
+13960 add post-ra pass to optimize use of global addrs
+14956 Pass order reversed: bit-simplification and split-double
+15076 properly handle backedges when splitting entry
+15136 teach preprocessor to support -dU
+15141 fix mangling of statics in class members
+15488 port region extraction changes from 64_DEV
+15623 preserve labels for collocated constants
+15646 sync up options from modem-sw-size from 6.4dev to 6.4release
+15771 Expand-condsets can move a load over an aliased store
+15832 add enum-compare diagnostic to medium group
+15860,15884 fpic for blockaddress
+15897 Fix overflow pattern in mulhu definition.
+15967 merge noreturn calls
+16158 add any unprioritized diags to medium
+16222 post-process: put 7.2 changes onto 6.4
+16285 Remove reference to llvm.org from crash message
+16302 Change tautological-constant-out-of-range-compare to medium from high
+16307 float intriniscs missing isFloat , invalid packet with -flto
+16313 Backtrack through bitcasts when analyzing stack object offsets
+16387 make some taut. diags that are 'ignored' by default 'low'
+16507 - Fix pull-up when pulling into a packet with an uncond. branch.
+16549 move ignored diags out of high/medium
+16583 set default for shrink-wrap and func-merge back to 'all', was size.
+16591 add option to restrict merge-blocks to Os.
+16620 add option to disable tail-merge at O2 and above -tail-merge-level=perf
+16635 Static analyzer: Allow specific checkers to be disabled.
+16639 - Enable pull up only when O2 or above is used, never for Os.
+16649 provide option to control save/restore regs size threshold (modem)
+16656 add blacklist option for funcs to shrink-wrap
+16713 add flag to select old pass placement for BitSimplify
+16714 add flag to disable reduce unalignment patch
+16715 add flag to disable multiply high/low
+16718 add flag to disable hexagon lsr pred
+
+Simulator:
+9367 new HexagonWrapper Ctor that accepts rev_id string
+11833 new core-dump facility in the simulator
+14527 Dril.cpp implementation for g/G cmds are wrong
+14847 Simulator adds support for stuffing l2tagr/w and others
+15027 Add support for L1S and L2TCM access callback
+15034 Simulator prints out more information
+15045 New simulator API functions to R/W TLB registers
+15326 Use correct arch_v4 rev_id in BRANCH_v55
+15392 double free after producing core-dump
+15403 Simulator does not react properly with -mv56 on v60-elf
+15526 changes in c99emul.c to bring simulator to MSVC-2013
+15624 Misc. src/swi.c coding errors
+15636 T32 MCD interface error due to simulator problem
+15749 new flag --build_tag to identify simulator build-time git
+15914 skip qprof dll loaded emit call when not profiling
+15933 Suppress DRIL unrecognized packet warning if not verbose
+15983 Support Angel call 0x48 and 0x4a
+15987 simulator quits when LLDB reads vector register before
+16025 hexagon-sim -mv56t_768 tells debugger only 2 HW threads
+16049 Carry 15861 part.1 from master to BRANCH_v55
+16052 errno test failure in windows for opendir()
+16060 cmd line parsing problem when double-dash preceds target
+16290 Reduce git log output to avoid windows side build errors
+16312 Simulator segv when the path to ELF is too long
+16374 Simulator should clean up --build_tag artifacts
+16414 dril.cpp handling tlbdata should use proper entry count
+16444 polish build_tag.pl for processing tools/x
+16534 hexagon-sim crashes when unacceptable -G port is used
+
+Profiler:
+10154 assume delta cycles is zero on first stack frame
+15814 fix callgraph UI deadlocks and other callgraph UX issues
+
+Resourceanalyzer:
+8285 handle llvm large stack alloc methods
+15416 padd address string with zeros for function lookup
+15548 add csv export functionality to gui
+16396 guard against unexpected text that looks like text section
+16411 fix llvm large stack alloc calculation for obj files
+
+
+-- Release 6.4.02 ----
+
+Mentor release version: Sourcery CodeBench Lite 5.1 2012.03-133
+
+LLVM:
+10285 Clean up HexagonTargetMachine.cpp.
+10643,14228 UNREACHABLE executed at HexagonAsmPrinter.cpp:262
+12624 Implement dcfetch intrinsic.
+12897 Expand COMBINE instructions into REG_SEQUENCE.
+12898 DAG-combine (or (select c x 0) z) into (select c (or x z) z).
+12899 De-legalize extending loads from i32 (to wider types).
+12900 Better generation of MPY/MPY64.
+12901 Fix ADDRriS11_n pattern predicates where the 'n' did not match the
+      store size.
+12902 Generate instructions for logical operations on predicate registers.
+12903 Consistently treat anyext as zero-ext in selection patterns.
+12904 Check register aliases when consulting loop live-ins.
+13248 Do not narrow loads of objects placed in small-data.
+13255 merge-blocks: correctly handle back-edges to entry block
+13320 Implementation of bit-tracking facility.
+13321 Generate "insert" instructions more aggressively.
+13399 Eliminate hexagon-argset-predef, merge with -O2/-Os/-O3.
+13496 Extend expansion of COMBINE instructions
+13553 Ignore DBG_VALUE instructions in HRC.
+13611 Generate "extract" instructions more aggressively.
+13649 Generate tail calls in presence of branches.
+13650 Move invariant GEPs out of loops.
+13652 Generate add(##address, asl(R, #N)) instruction.
+13677 enable by default -hexagon-old-sdata=0 for 6.2.09
+13678 Generate post-increment when base is used multiple times.
+13680 Keep track of visited nodes in getLoadNode (DAG combiner).
+13703 Make references to HexagonTargetMachine "const".
+13718 Run dead code elimination before insert generation.
+13720 Do not introduce callee-saved registers in HRC.
+13824 Handle double registers for CFA.
+13825 Remove etc/ from HEXAGON_REL_BRANCH_6_4.
+13831 Properly handle sign- and zero-extended function arguments.
+13832 Handle missing location for child nodes in GEP commoning.
+13835 Fix index when removing element from list.
+13897 fail to delete dealloc_frame, jumplr after jump in previous packet
+13913 MI Scheduler is reordering 2 memory instructions which are aliased.
+13929 Fix loop unroller bug in branch 6.2.
+13938 Implement early if-conversion.
+13948 Use earliest/latest cycle in chain for scheduling.
+13960 add collocate-constants pass.
+13987 Tail duplication mixes 32-bit and 64-bit registers.
+13992 Generate complete range for location list in DWARF.
+14000 Catch more opportunities for HW loop generation.
+14001 Generating a bad packet: 3 instructions and two constant extenders
+14008 Treat objects with opaque types as not being in small-data.
+14016,14054 Branch target out of range.
+14024 We do not want big differences in the code we generate.
+14030 Apply the TCM inline-threshold heuristic at the new O3 as well.
+14035 Do not split loop back edges in PRE on Hexagon.
+14055 Check for LOOP instruction when adding new-value jumps to packets.
+14086 MSW: restrict arg wrapping to module scope
+14096 correctly adjust succ phis when pred occurs >1
+14147 Make tail call followed by unreachable insn as tail call.
+14196 hardware loop position miscalculated in BB
+14197 Disable attribute packed errors. Disable warning on packed attribute.
+14200 Disable HexagonPeephole::hoistRegCopyInstr.
+14214 MSW: %H0 and %L0 modifiers need to be supported for inline asm.
+14236 Simplify HexagonInstrInfo::PredicateInstruction.
+14246 Properly handle TFR_condset_rr with the same register in both sources.
+14258 Fix count leading/trailing bits in bit tracker.
+14259 Recognize LSRd_ri and HEXAGON_S2_packhl in Hexagon bit tracker.
+14261 Fix instruction types for combine_{hl,...} intrinsics.
+14262 Simplify conditional transfers with both inputs identical.
+14271 Throwing call is a scheduling boundary.
+14286 Respect -ffixed-rXX option.
+14292 Prevent loop idiom recognition from working on short loops.
+14299 Use -gpsizex instead of -Gx when invoking llvm-mc on 6.2/6.4.
+14303 remove shrink wrap unary* from modem-sw-size
+14311 Generate TFR_condset instead of MUX in instruction selection.
+14320 Expand TFR_condset instructions early
+14321 Set the minimum output latency to 0.
+14348 Remember to keep subregisters in PHI nodes when adding preheader.
+14459 add interface to report diagnostics to front-end
+14558 Set isPredicatedFalse and isPredicatedNew in the .td files.
+14559 Ignore implicit uses when reporting errors in RegisterScavenger.
+14560 Handle predicated instructions in HRC.
+14561 Eliminate non-deterministic code generation from HexagonCommonGEP.
+14562 Do not split volatile loads in peephole.
+14581 improved warnings for out-of-range comparisons
+14590 Provide alternate cost comparison function in LSR.
+14594 Assume constant extenders are always profitable during isel.
+14595 More accurate register aliasing test in post-RA machine LICM.
+14596 Run post-RA machine LICM on all nested loops.
+14612 Bias early if-conversion towards small blocks.
+14613 Separate live ranges of loop induction variables.
+14697 Incorrect instructions for vector-shift-by-immediate intrinsics.
+14699 Invalid use of new FP value with NVJ
+14714 Invalid use of TFRI64 in TFR cleanup.
+14715 Avoid detrimental register coalescing in TFR_condset expansion.
+14716 Add option to control code size threshold in early if-conversion.
+14717 Expand extractup-subreg intrinsic into combine-subreg.
+14718 Collapse pairs of TFR_cNotPt into MUX when too far for dot-new.
+14719 Constant propagate immediates into cmp.eq(reg,reg).
+14720 Split 64-bit operations into 32-bit ones.
+14738 Bit-tracker enhancements: LSR_ANDd, TFR_FI.
+14745 Perform some basic simplifications using bit-tracking info.
+14859 don't cleanup IV copies for landing pads
+14897 Argument attribute mismatch in Hexagon bit tracker
+14954 Add missing callee saved registers.
+14958 Increase the early if-conversion size limit
+15001 Enable tail call optimizations by default at O3.
+15334 Skip all global+offset values in stores in const-ext optimization.
+15377 Address code generation differences with argset=modem-fw.
+      Add -mhexagon-mc-assembler option to 6.2/6.4 release branches
+      Generalize the PassConfig API and remove addFinalizeRegAlloc().
+
+Dinkumware:
+14099 Dinkumware NO_DEALLOC_RETURN libraries
+14505 Bug in strcmp
+14653 Avoid identity copy in sqrtf.
+
+LDSO:
+14106 Add ability to build no-dealloc_return libraries
+
+Libnative:
+13790 incorrect paramenters for libnative inst filter
+
+Libqdsp:
+14105 Add no-dealloc_return version of the build
+
+Profiler:
+14839 fix cycle counting for recursive functions
+15033 add missing application icon
+15073 update v56 rev ids to match simulator
+
+Simulator:
+9136  Identify hexagon-sim in err_warn and err_fatal
+12929 hexagon-sim loads DLL from different locations
+13140 pagetable error message handling
+13262 Fully qualify all related code by #if directive
+13266 independent operation
+13455 component traces fir uarchtrace are blocked
+13550 multi-proc build support for the simulator
+13795 Support new rev_id v56t_512
+13797,13991,14818 VectorRegisterInfo support for LLDB
+13876 Make the register-dump and stack-dump available
+13952 Augment HexagonSimulator::causeException()
+13956 qRegisterInfo support for LLDB
+14080 AXIM2 not set up correctly in hexagon-sim
+14111 simulator "make test_build" should have timing mode cases
+14159 treat osam callback parameter as threadId instead of tcb
+14242 change .o to .obj in .d files when building on windows
+14412 Increase MAX_LINE_LEN to 4096
+14477 simulator/Makefile set MAKEDIRS to makedirs at the beginning
+14656 use correct thread ID when detecting shlib load/unload
+14677 Consistently use ullGetProcessorCycle for _Hexagon_emit calls
+14685 Scrub usage of arch_get_proc_stat(pcycles)
+14724 Add newer v56 rev_id and scrub attribute table
+14726 don't over-write PATH env var when running test_build on windows
+14790 Initialize DRIL::sym_context before use
+
+Cosims:
+12701 Change 10365 fix to assume always-secure mode
+14765 L2VIC deleting lower priority pending interrupts
+
+Trace32:
+14216 Corrected install target
+
+-- Release 6.4.01 ----
+
+Mentor release version: Sourcery CodeBench Lite 5.1 2012.03-129
+
+LLVM:
+No changes from 6.4
+
+Simulator:
+12332 Support T32 Coprocessor register window via stuff instruction
+12431 Acceleration request (bypass_idle) from Sensor team
+12745 new simulator/test infra-structure
+12817 Changes to names/signature for new API function
+12929 Update simulator/Makefile for different directory structures
+13140 Changes needed by hexagon-gdb for the debug-stub
+13327 remove icache dcache l2cache from simulator help output
+13457 Correct change for the debug build
+13474 add -s and remove -g from release build
+13560 Simulator does not report correct threads without qAttached
+13750 hexagon-sim -- elf_exec on windows
+13959 polishing work for the hook-up of "make test_build"
+
+Cosims:
+9984  sirc.so intermittent error
+10001 fix printf format mismatch for HEX_PA_t
+10365 Update qtimer cosim to support 3 timers and no-access-ctrl
+11189 cosims/l2vic/src/Makefile defect in creating directories
+11708 remove tools/cosims/sirc from BRANCH_v55 and master
+11804,11805 Add L2VIC cosim level interrupt workaround to QTimer
+11820 cosims/{l2vic,L2timer} upgrade to PA 36 bit
+12017 Remove tools/cosims/timer from BRANCH_v55 and master
+12891 part.2 also fix param-parsing for win32
+12981 qtimer.h upgraded for PA 36 bit
+
+C Library:
+13287 Provide libraries without dealloc_return
+
+libdl:
+12033 Hexagon tools v6.3, v4 libdl.a link in the <install>/gnu tree is broken.
+13129 Install libdl in correct location.
+
+libnative:
+13654 build libnative with fPIC option on Linux
+
+libqdsp:
+12677 intrinsics in 'hexagon_circ_brev_intrinsics.h' have no C prototype
+
+Profiler:
+13510 warn on fcn id mismatch instead of exit
+13535 warn on stack data inconsistencies
+13537 don't use hardware thread count as stall cycle count after v4
+13655 better handling of inconsistent thread data from osam
+13732 remove use of stdint.h in shared header
+
+Resourceanalyzer
+11513 Redesign search to be more user friendly
+12108 remove -r option in windows build
+12714 change default core from v4 to v5
+12731 Add alternate install for release 7.
+12980 add callgraph plugin to maven build
+13080 fix crash when reading shared object
+13430 handle 7.1 llvm-objdump format change.
+13697 add quotes around fcn name in backends csv ouput
+13731 modem image analysis improvements
+13892 auto expand worst case
+13921 remove march option from linker command line
+13967 add gui for manual directory entry
+13970 filter worst case output using rootfile
+13977 fix crash when parsing elf with compressed section
+
+Trace32:
+12332 Support T32 Coprocessor register window via stuff instruction
+12835,12836 MCD: Resolve conflict when arch in arch= and simargs= don't match
+
+#### Notices ####
+This product includes software developed by John Polstra.
+
+This product includes software developed by the NetBSD
+Foundation, Inc. and its contributors.
+
+This product includes software developed for the
+NetBSD Project.  See http://www.NetBSD.org/ for
+information about NetBSD.

@@ -1,0 +1,2 @@
+#!/bin/sh
+exec `dirname $0`/hexagon-c++ -mqdsp6-compat "$@"

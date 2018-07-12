@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [ $# -eq 0 ]
+then
+echo "Usage: $0 exefile"
+exit
+fi
+
+hexagon-objdump -x $1 | fgrep "start address" | sed 's/start address \(.*\)/StartPC = \1;/'
+hexagon-nm $1 | fgrep " T " | sort | uniq -w 8 | sed '1s/^/0x/' | sed '2,$s/\(.*\)/0x\1\n0x\1/' | sed '{
+	N
+	s/\n/ /
+}' | sed '$s/\(.*\)/\1 0x100000000 T END/' | \
+	awk '{ range_end = strtonum($4) - 1; printf "\"%s\" = %s - 0x%x;\n", $3, $1,
+range_end }' 

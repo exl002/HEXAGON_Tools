@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+<title>Hexagon - Untitled</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Untitled">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="Machine-Dependent.html#Machine-Dependent" title="Machine Dependent">
+<link rel="prev" href="H8_002f300.html#H8_002f300" title="H8/300">
+<link rel="next" href="i960.html#i960" title="i960">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+This file documents the GNU linker LD
+(Sourcery CodeBench Lite 5.1 2012.03-150)
+version 2.21.53.
+
+Copyright (C) 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000,
+2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, with no Front-Cover Texts, and with no
+Back-Cover Texts.  A copy of the license is included in the
+section entitled ``GNU Free Documentation License''.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+<link rel="stylesheet" type="text/css" href="../cs.css">
+</head>
+<body>
+<div class="node">
+<a name="Hexagon"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="i960.html#i960">i960</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="H8_002f300.html#H8_002f300">H8/300</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="Machine-Dependent.html#Machine-Dependent">Machine Dependent</a>
+<hr>
+</div>
+
+<h3 class="section">4.5 <samp><span class="command">ld</span></samp> and the Hexagon family</h3>
+
+<p>The following Hexagon-specific command-line options are supported:
+
+   <p><a name="index-Hexagon-options-620"></a>
+     
+<a name="index-output-architecture-621"></a>
+<a name="index-g_t_002d_002dmarch_003d_0040var_007barchitecture_007d-622"></a>
+<dl><dt><samp><span class="option">--march=</span><var>architecture</var></samp><dd>Link for the specified Hexagon architecture. 
+By default, the linker uses the architecture of input objects and criteria
+such as ABI and binary compatibility to determine the architecture of the
+output object.  By using this option, it is possible to
+guarantee the architecture of the output object. 
+The following architecture names are valid:
+&lsquo;<samp><span class="samp">v2</span></samp>&rsquo;, &lsquo;<samp><span class="samp">v3</span></samp>&rsquo;, &lsquo;<samp><span class="samp">v4</span></samp>&rsquo;, and &lsquo;<samp><span class="samp">v5</span></samp>&rsquo;.
+
+     <p><a name="index-g_t_002d_002dmcpu_003d_0040var_007barchitecture_007d-623"></a><br><dt><samp><span class="option">--mcpu=</span><var>architecture</var></samp><dd>Equivalent to &lsquo;<samp><span class="samp">--march=</span><var>architecture</var></samp>&rsquo;.
+
+     <p><a name="index-g_t_002dmv2-624"></a><a name="index-g_t_002dmv3-625"></a><a name="index-g_t_002dmv4-626"></a><a name="index-g_t_002dmv5-627"></a><br><dt><samp><span class="option">-mv2</span></samp><dt><samp><span class="option">-mv3</span></samp><dt><samp><span class="option">-mv4</span></samp><dt><samp><span class="option">-mv5</span></samp><dd>Link for the specified Hexagon architecture.  Equivalent to the corresponding
+&lsquo;<samp><span class="samp">--march=</span></samp>&rsquo; option.
+
+     <p><a name="index-Hexagon-TCM-sections-628"></a><a name="index-g_t_002d_002dtcm-629"></a><br><dt><samp><span class="option">--tcm</span></samp><dd>Use the TCM sections and those for other memory buses. 
+(not available in all emulations).
+
+     <p><a name="index-trampoline-generation-on-Hexagon-630"></a><a name="index-g_t_002d_002dtrampolines-631"></a><a name="index-g_t_002d_002dno_002dtrampolines-632"></a><br><dt><samp><span class="option">--trampolines</span></samp><dt><samp><span class="option">--no-trampolines</span></samp><dd>Control addition of trampolines to certain types of branches when
+the target is beyond the reach of the instruction offset. 
+Trampolines are appended to the input section that
+contains the branch, so the end of the section must be within its range in order
+to add a trampoline successfully. 
+Trampolines are code stubs that use the largest available branch instruction to
+reach the target.  Therefore, they are not neutral in terms of performance and
+code size. 
+The default is &lsquo;<samp><span class="samp">--trampolines</span></samp>&rsquo;. 
+</dl>
+
+   </body></html>
+

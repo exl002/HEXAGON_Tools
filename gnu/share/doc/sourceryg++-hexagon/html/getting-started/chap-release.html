@@ -1,0 +1,492 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Appendix A. Sourcery CodeBench Lite 5.1 Release Notes</title><link rel="stylesheet" href="cs.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.74.0"><meta name="description" content=" This appendix contains information about changes in this release of Sourcery CodeBench Lite 5.1 for Hexagon ELF. You should read through these notes to learn about new features and bug fixes."><link rel="home" href="index.html" title="Sourcery CodeBench Lite 5.1"><link rel="up" href="index.html" title="Sourcery CodeBench Lite 5.1"><link rel="prev" href="ch05s03.html" title="5.3. Manuals for GNU Toolchain Components"><link rel="next" href="chap-license.html" title="Appendix B. Sourcery CodeBench Lite 5.1 Licenses"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Appendix A. Sourcery CodeBench Lite 5.1 Release Notes</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch05s03.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="chap-license.html">Next</a></td></tr></table><hr></div><div class="appendix" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="chap-release"></a>Appendix A. Sourcery CodeBench Lite 5.1 Release Notes</h2></div><div><div class="abstract"><p class="title"><b></b></p><p>
+     This appendix contains information about changes in this
+     release of Sourcery CodeBench Lite 5.1 for Hexagon ELF.  You should read
+     through these notes to learn about new features and bug fixes.
+    </p></div></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="chap-release.html#sec-release-notes">A.1. Changes in Sourcery CodeBench Lite 5.1 for Hexagon ELF</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="sec-release-notes"></a>A.1. Changes in Sourcery CodeBench Lite 5.1 for Hexagon ELF</h2></div></div></div><p>
+      This section documents Sourcery CodeBench Lite 5.1 changes for each released revision.
+    </p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id406755"></a>A.1.1. Changes in Sourcery CodeBench Lite 5.1 2012.03-150</h3></div></div></div><p><b>Fix to linker-generated trampolines. </b>
+	  A bug that caused some re-used trampolines to jump to the
+	  wrong location has been fixed.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id406829"></a>A.1.2. Changes in Sourcery CodeBench Lite 5.1 2012.03-143</h3></div></div></div><p><b>No significant changes. </b>
+          There are no significant changes for Hexagon ELF in
+          this release.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id406852"></a>A.1.3. Changes in Sourcery CodeBench Lite 5.1 2012.03-139</h3></div></div></div><p><b>Compiler fix for invalid packets. </b>
+	  The compiler no longer produces packets
+	  using the result of a floating point instruction with
+	  <code class="code">.new</code>.
+        </p><p><b>Hardware loop bug fix. </b>
+	  A compiler optimization bug has been fixed that caused some
+	  hardware loops to use an incorrect iteration count.
+        </p><p><b>Fix for linker internal error. </b>
+	  A linker bug has been fixed that caused it to abort with
+	  an internal error instead of producing a diagnostic for
+	  certain invalid symbol relocations.
+        </p><p><b>Increase trampoline re-use. </b>
+	  The linker has been enhanced to re-use trampolines up to 256 times
+	  where possible.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id406997"></a>A.1.4. Changes in Sourcery CodeBench Lite 5.1 2012.03-138</h3></div></div></div><p><b>Fix to packet optimization. </b>
+	  A compiler optimization bug has been fixed that incorrectly changed
+	  the order of related write instructions.
+        </p><p><b>Trampolines for local symbols. </b>
+	  The linker now ensures that all trampolines for local symbols
+	  jump to their corresponding targets.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id407093"></a>A.1.5. Changes in Sourcery CodeBench Lite 5.1 2012.03-133</h3></div></div></div><p><b>Restriction on new-value compare jumps. </b>
+	  New-value compare jump instructions cannot use the result of
+	  a floating-point instruction created in the same packet.
+	  The compiler no longer produces such packets.
+        </p><p><b>Fix for internal compiler error. </b>
+	  An internal compiler error (ICE) in
+	  <code class="function">insert_value_copy_on_edge</code> has been fixed.
+      </p><p><b>Fix for debug info bug. </b>
+	  A compiler bug has been fixed that was causing incomplete DWARF-2
+	  debug information for function prologues in some situations.
+        </p><p><b>Define additional guest registers. </b>
+	  The assembler now recognizes registers
+	  <code class="code">g16</code> to <code class="code">g19</code> and
+	  <code class="code">gpmucnt4</code> to <code class="code">gpmucnt7</code>.
+        </p><p><b>Restriction on new-value compare jumps. </b>
+	  New-value compare jump instructions cannot use the result of
+	  a floating-point instruction created in the same packet.
+	  The assembler now recognizes this combination and reports an error.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id407273"></a>A.1.6. Changes in Sourcery CodeBench Lite 5.1 2012.03-130</h3></div></div></div><p><b>Optimization fix for hardware loops. </b>
+	  A GCC optimization bug has been fixed that sometimes caused
+	  incorrect code to be generated for hardware loops.
+        </p><p><b>Fix for hardware loop compile error. </b>
+	  An internal compiler error (ICE) in hwloop_optimize
+	  has been fixed.
+        </p><p><b>Fix for internal compiler error. </b>
+	  An internal compiler error (ICE) in
+	  <code class="function">change_queue_index</code> has been fixed.
+        </p><p><b>Fix for internal compiler error. </b>
+	  An internal compiler error (ICE) in
+	  <code class="function">merge_if_block</code> has been fixed.
+        </p><p><b>GDB <code class="command">info tlb</code> and
+	       <code class="command">info pagetable</code> command enhancements.
+	. </b>
+          GDB's <code class="command">info tlb</code> and
+	  <code class="command">info pagetable</code> commands have been modified
+	  to use the <code class="literal">qXfer:osdata</code> protocol.
+        </p><p><b>Fix for GDB segmentation fault. </b>
+	  A bug has been fixed that caused GDB to crash when reading a
+	  binary with incorrect debug information.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id407497"></a>A.1.7. Changes in Sourcery CodeBench Lite 5.1 2012.03-129</h3></div></div></div><p><b>Fix for <code class="code">hexagon-gcc -mno-dealloc_return</code>. </b>
+	  A code generation bug for <code class="option">-mno-dealloc_return</code>
+	  has been fixed that sometimes caused an infinite loop.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id407578"></a>A.1.8. Changes in Sourcery CodeBench Lite 5.1 2012.03-128</h3></div></div></div><p><b>New compiler option. </b>
+	  Support was added for <code class="code">hexagon-gcc -mno-dealloc_return</code>.
+        </p><p><b>New assembler option. </b>
+	  Support was added for <code class="code">hexagon-as -mno-dealloc_return</code>.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id407680"></a>A.1.9. Changes in Sourcery CodeBench Lite 5.1 2012.03-126</h3></div></div></div><p><b>No significant changes. </b>
+          There are no significant changes for Hexagon ELF in
+          this release.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id407703"></a>A.1.10. Changes in Sourcery CodeBench Lite 5.1 2012.03-125</h3></div></div></div><p><b><code class="command">ld --dynamic-list</code> fixed for undefined symbols. </b>
+	  The option <code class="option">--dynamic-list</code> has been fixed so
+	  that creating an executable includes and export definitions for
+	  symbols not already defined.
+        </p><p><b>Bug fix in <code class="code">objdump --disassemble</code>. </b>
+          A disassembler bug is fixed that caused a crash for an
+	  unknown instruction.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id407810"></a>A.1.11. Changes in Sourcery CodeBench Lite 5.1 2012.03-123</h3></div></div></div><p><b>Optimization fix for packed structs. </b>
+          A GCC optimization bug has been fixed that could cause an
+	  unaligned access to a member of a packed struct.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id407884"></a>A.1.12. Changes in Sourcery CodeBench Lite 5.1 2012.03-122</h3></div></div></div><p><b>Optimization fix for packed structs. </b>
+          A GCC optimization bug has been fixed that caused an exception
+	  for some accesses to unaligned members of packed structures.
+        </p><p><b>Fix <code class="code">objcopy --change-section-lma</code> output. </b>
+          An objcopy bug was fixed that caused a bad header for the
+	  DYNAMIC segment when modifying section load addresses.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id407985"></a>A.1.13. Changes in Sourcery CodeBench Lite 5.1 2012.03-121</h3></div></div></div><p><b>Switch statement optimization bug fix. </b>
+          A GCC optimization bug has been fixed that caused incorrect code
+          for some switch statements.
+        </p><p><b>Support for Hexagon V55. </b>
+          The binutils tools now assemble/disassemble V55
+	  instructions and recognize V55 register names.
+        </p><p><b>GDB Hexagon v55 global registers support. </b>
+          GDB now supports displaying and setting Hexagon v55 global
+	  registers with the <code class="command">info globalregs</code> and
+	  <code class="command">set globalregs</code> commands.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id408115"></a>A.1.14. Changes in Sourcery CodeBench Lite 5.1 2012.03-119</h3></div></div></div><p><b>Update Python to 2.7.5. </b>
+          The version of Python used by GDB has been updated
+          to 2.7.5.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id408191"></a>A.1.15. Changes in Sourcery CodeBench Lite 5.1 2012.03-118</h3></div></div></div><p><b>Missing debug info. </b>
+          A gcc bug has been fixed that prevented the debug option
+	  (<code class="option">-g</code>) from being passed to the assembler.
+        </p><p><b>Linker section merging. </b>
+          A linker bug that incorrectly placed sections with different write 
+	  attributes into the same segment has been fixed.
+        </p><p><b>Linker trampoline bug fixed. </b>
+          A linker bug that could cause incorrect sharing of a trampoline for
+	  long-range calls and jumps to local symbols has been fixed.
+        </p><p><b>Linker trampoline in overlay sections. </b>
+	  A linker bug that allowed invalid use of trampolines
+	  in overlapping overlay sections has been fixed.
+        </p><p><b>Disassembly packets. </b>
+          A bug in objdump that caused disassembly to have incorrect
+	  packet boundaries has been fixed.
+        </p><p><b>Linker trampoline bug fixed. </b>
+           A linker bug that could allow trampolines to become unreachable
+	   has been fixed.
+        </p><p><b>GDB segmentation fault fix. </b>
+          A bug has been fixed that caused GDB to crash with
+	  a segmentation fault when the command
+	  <code class="command">info globalregs</code> was used.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id408418"></a>A.1.16. Changes in Sourcery CodeBench Lite 5.1 2012.03-114</h3></div></div></div><p><b>Loop optimization fix. </b>
+          A bug that caused a compiler crash when optimizing certain
+	  patterns of loop code has been fixed.
+        </p><p><b>Fix for linker script location counter assignments. </b>
+          A bug in the linker has been fixed that caused it to miscalculate
+	  the value for some assignments to the location counter.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id408515"></a>A.1.17. Changes in Sourcery CodeBench Lite 5.1 2012.03-113</h3></div></div></div><p><b>Linker trampoline bug fixed. </b>
+	  A bug in the linker has been fixed that caused it to generate
+	  incorrect offsets to some trampolines for long-range calls and jumps.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id408589"></a>A.1.18. Changes in Sourcery CodeBench Lite 5.1 2012.03-112</h3></div></div></div><p><b>Linker output is often smaller. </b>
+          The linker now re-uses trampolines for long-range branches and calls
+	  when possible, instead of creating a new one for each use.
+	  This change results in smaller executables.
+        </p><p><b>Installer <code class="envar">PATH</code> bug fix. </b>
+          An installer bug that caused it to set the
+          <code class="envar">PATH</code> variable incorrectly has been fixed.
+        </p><p><b><code class="literal">cs-rm -f</code> bug fix. </b>
+          A bug that caused <code class="literal">cs-rm -f</code> on
+          Windows hosts to incorrectly issue an error when
+          passed a glob pattern that matched nothing has been
+          fixed.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id408731"></a>A.1.19. Changes in Sourcery CodeBench Lite 5.1 2012.03-111</h3></div></div></div><p><b>Improved linker message. </b>
+          The linker now gives a better error message when it cannot emit
+	  a trampoline for a long-range branch.
+        </p><p><b>Small data fix. </b>
+          An assembler bug has been fixed where small data sections
+	  were not marked with the <code class="code">SHF_GPREL</code> flag.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id408830"></a>A.1.20. Changes in Sourcery CodeBench Lite 5.1 2012.03-110</h3></div></div></div><p><b>GDB breakpoint fix. </b>
+          A GDB bug has been fixed that caused it to set breakpoints on some
+	  optimized functions at an incorrect location.
+        </p><p><b>Some title. </b>
+          Some text.
+        </p><p><b>GDB support for Hexagon v55. </b>
+          Support for Hexagon v55 has been added to GDB.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id408948"></a>A.1.21. Changes in Sourcery CodeBench Lite 5.1 2012.03-106</h3></div></div></div><p><b>Optimizer bug fix. </b>
+          A bug that caused the compiler to generate incorrect code
+          for read-modify-write operations at optimization level
+          <code class="option">-O2</code> and above has been fixed.
+        </p><p><b>Fixed 64-bit <code class="code">asrrnd</code>. </b>
+	  The assembler gave an <code class="code">invalid instruction</code> error for the
+	  64-bit version of the <code class="code">asrrnd</code> instruction.  Now the
+	  assembler handles this instruction correctly.
+        </p><p><b>Dynamic object generation for Hexagon V4. </b>
+          The linker no longer generates an incorrect PLT for
+          Hexagon V4 or later.
+        </p><p><b>File open errors in Windows-host toolchain. </b>
+	  A bug that caused the binary utilities programs to fail with file
+	  open errors on Windows hosts has been fixed.
+        </p><p><b>Diagnostic for invalid packet. </b>
+          The assembler now emits a <code class="literal">register `rN' modified more than
+	  once</code> error when it encounters a packet containing multiple
+	  writes to the same register predicated on the same condition.
+        </p><p><b>Relocation range checking. </b>
+          A linker bug has been fixed that caused errors such as
+	  <code class="literal">ld: can't relax section: File format not
+	  recognized</code>.
+        </p><p><b>Installer warnings fixed. </b>
+          A bug that caused Gtk warnings relating to
+          <code class="filename">libappmenu.so</code> when running the installer
+          on 64-bit Ubuntu GNU/Linux hosts has been fixed.
+        </p><p><b>Backtrace bug fix. </b>
+          A bug has been fixed that caused GDB to display incorrect
+	  backtraces for optimized binaries.
+        </p><p><b>Breakpoint trigger behavior fix. </b>
+          GDB now assumes the Hexagon ELF RTOS debug stub reports
+	  the PC of the next instruction and the Hexagon ELF simulator reports
+	  the PC of the current instruction when a software breakpoint is hit.
+	  This fixes a bug with incorrect reporting of the PC when stopped at a
+	  breakpoint.
+        </p><p><b>Support for Hexagon ELF debug stub. </b>
+          GDB now supports debugging via a stub, available from Qualcomm.
+	  Previously, only the simulator (<code class="command">hexagon-sim</code>) was
+	  supported.
+        </p><p><b>Invalid memory read fix. </b>
+	  A bug has been fixed that caused GDB to attempt to read
+	  target memory at address 0, thus resulting in an internal error.
+        </p><p><b>Sourcery CodeBench Lite 5.1 naming. </b>
+          This edition of Sourcery CodeBench has been renamed to
+	  Sourcery CodeBench Lite 5.1 to match Qualcomm's version numbering.
+	  The included components and component versions have
+	  not changed since previous releases.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id409305"></a>A.1.22. Changes in Sourcery CodeBench Lite 5.1 2012.03-101</h3></div></div></div><p><b>Hexagon V55 support in QDSP6 compatibility mode. </b>
+	  The compiler no longer encounters an ICE in
+          <code class="function">c_cpp_builtins</code> when invoked with both
+          <code class="option">-mv55</code> and <code class="option">-mqdsp6-compat</code>.
+        </p><p><b>Loop instruction restriction for Hexagon V4. </b>
+          A restriction in the assembler that prevented a packet
+          containing jump instructions from also containing a loop set-up
+          instruction has now been lifted for Hexagon V4 and above.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id409416"></a>A.1.23. Changes in Sourcery CodeBench Lite 5.1 2012.03-100</h3></div></div></div><p><b>Support for Hexagon architectures. </b>
+	  Generating code for Hexagon V4 architecture is now the default.
+	  Support for older architectures is removed.
+        </p><p><b>Fix for internal compiler error. </b>
+          A GCC bug has been fixed that caused it to report an internal
+	  compiler error in <code class="function">add_var_loc_to_decl</code> when
+	  compiling some files with <code class="option">-g</code>.
+        </p><p><b>Hexagon V55 option handling. </b>
+          The linker no longer emits an <code class="literal">unrecognised emulation mode:
+          v55</code> error when invoked with <code class="option">-mv55</code>.
+        </p><p><b>Support for Hexagon architectures. </b>
+          Generating code for Hexagon V4 architecture is now the default.
+	  Support for older architectures is removed.
+        </p><p><b>Loop instruction restriction. </b>
+          For Hexagon V5 and above, a restriction in the assembler has
+          been lifted that prevented a packet containing jump instructions
+          from also containing a loop set-up instruction.
+        </p><p><b>GDB duplex instruction bug. </b>
+          A bug has been fixed that prevented GDB from properly stepping
+	  through a group of instructions in a packet containing a duplex
+	  instruction.  Another bug has been fixed that caused GDB to
+	  sometimes insert breakpoints at incorrect addresses for packets
+	  containing duplex instructions.
+        </p><p><b>GDB segfault. </b>
+          A bug has been fixed that caused GDB to crash whenever
+	  the <code class="command">maint print architecture</code> command was used.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id409650"></a>A.1.24. Changes in Sourcery CodeBench Lite 5.1 2012.03-97</h3></div></div></div><p><b>Hexagon V55 preprocessor macros. </b>
+          The behavior of preprocessor macros indicating Hexagon V55 has
+          been modified.  When compiling for that architecture version,
+          the <code class="constant">__HEXAGON_ARCH__</code> macro is now set to
+          <code class="literal">55</code>, and <code class="constant">__HEXAGON_V5__</code>
+          is no longer defined.
+        </p><p><b>Braces in disassembled code. </b>
+          Code disassembled with the <code class="command">objdump</code> command
+          now shows braces around packets containing only a single
+          instruction (or duplex/compound instruction).
+        </p><p><b>Hexagon simulator environment variables. </b>
+	  A bug has been fixed that caused the Hexagon simulator not to
+	  inherit GDB's environment variables when it is launched via
+	  the GDB <code class="command">start</code> or <code class="command">run</code> commands
+	  on Windows hosts. 
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id409801"></a>A.1.25. Changes in Sourcery CodeBench Lite 5.1 2012.03-96</h3></div></div></div><p><b>Hexagon V55 support. </b>
+          The toolchain now contains nominal support for Hexagon V55.
+        </p><p><b>Internal compiler error with intrinsics. </b>
+          A bug has been fixed that caused internal compiler
+          errors when using certain intrinsics from the
+          <code class="filename">hexagon_protos.h</code>
+          header file.
+        </p><p><b>Corrected loop initialization. </b>
+          A GCC bug has been fixed that caused incorrect code for some loop
+	  initializations.
+        </p><p><b>Packet restriction for Hexagon V5. </b>
+          The assembler has been corrected so that a MEMOP-class
+          instruction is no longer permitted in the same packet as a
+          store instruction for Hexagon V5.
+        </p><p><b>Hexagon V5 double-precision float instructions. </b>
+          Support for several double-precision floating point instructions
+          which are no longer part of the Hexagon V5 architecture has
+          been removed from the assembler.
+        </p><p><b>Bitfield signedness. </b>
+          A defect has been fixed that caused plain <code class="code">int</code>
+	  bitfields to default to signed behaviour, contrary to the
+	  Hexagon psABI.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id409999"></a>A.1.26. Changes in Sourcery CodeBench Lite 5.1 2012.03-92</h3></div></div></div><p><b>Stack-frame debug info fix. </b>
+          A bug in the stack-frame debug information emitted by the
+          compiler has been fixed that caused <code class="literal">Could not find the
+          frame base</code> errors when examining function arguments
+          and local variables in the debugger.
+        </p><p><b>Internal compiler error with virtual functions. </b>
+          A compiler bug has been fixed that caused internal compiler errors
+          when compiling a virtual function in some cases of multiple or
+          virtual inheritance.
+        </p><p><b>Volatile memory accesses. </b>
+          For Hexagon V4 and above the compiler may now generate instruction
+          packets containing 2 volatile memory accesses by default.  This
+          functionality was previously controlled by the command-line option
+          <code class="option">-mpacketize-volatiles</code>, which has been removed.
+        </p><p><b>Missing register names fixed. </b>
+           The compiler now recognizes the register names <code class="code">gp</code>,
+           <code class="code">cs0</code>, and <code class="code">cs1</code> in inline assembly
+           specifications.  These registers are also now available in the
+           debugger.
+         </p><p><b>Duplicate <code class="code">.debug_line</code> sections fixed. </b>
+          A GCC bug has been fixed that caused assembler errors when
+	  compiling with both the <code class="option">-g</code> and
+	  <code class="option">-Wa,-gdwarf2</code> options.
+        </p><p><b>Double-precision float compatibility. </b>
+          The compiler no longer generates several double-precision
+          floating-point instructions which have been removed from the
+          Hexagon V5 architecture.
+        </p><p><b>Section address adjustment bug fix. </b>
+          A bug has been fixed that caused <code class="command">objcopy</code>
+          to emit errors of the form
+          <code class="literal">
+            <em class="replaceable"><code>section_name</code></em> can't be allocated
+            in segment <em class="replaceable"><code>segment_number</code></em>
+          </code>
+          when adjusting section addresses.
+        </p><p><b>Profiler support for constant-propagated functions. </b>
+          A bug has been fixed in the <code class="command">gprof</code> utility
+          that caused it to report incorrect function names for cloned
+          functions, generated by the compiler to take advantage of
+          constant propagation optimization opportunities.
+        </p><p><b>Linker bug fix for mixed architecture versions. </b>
+          A bug has been fixed that caused the linker to ignore the
+	  Hexagon architecture version of objects read from archives
+	  in determining how to mark the version of the output file.
+        </p><p><b>Windows shortcuts. </b>
+          The linker is is now able to follow Windows shortcuts to
+          locate needed files, such as libraries.
+        </p><p><b>Install to empty directory failure fixed. </b>
+          A bug that prevented installation of Sourcery CodeBench Lite 5.1 into an existing
+          empty directory has been fixed.
+        </p><p><b>Debugging shared objects. </b>
+          The debugger is now capable of detecting shared library events.
+          Previously, any breakpoints set pending a shared library load
+          would never trigger, as the load event was never detected by the
+          debugger.
+        </p><p><b>GDB internal error bug fix. </b>
+          A bug has been fixed that caused the debugger to fail with
+          an <code class="literal">Assertion `get_frame_type (frame) == DUMMY_FRAME'
+          failed</code> error message.  The bug was triggered by manually
+          calling functions in the debugged program.
+        </p><p><b>Updated system requirements. </b>
+          The host operating system requirements for Sourcery CodeBench Lite 5.1 have 
+          been updated. The minimum versions of GNU/Linux now supported 
+          are Red Hat Enterprise Linux 5, SuSE Enterprise Linux 10, 
+          Fedora Core 6, Ubuntu 8.04, and Debian 5, or later versions 
+          of these distributions running on 32-bit or 64-bit Intel or 
+          AMD CPUs.
+        </p><p><b><code class="command">hexagon-gcov</code>. </b>
+          The code-coverage utility <code class="command">hexagon-gcov</code> is
+          no longer included in Sourcery CodeBench Lite 5.1.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id410469"></a>A.1.27. Changes in Sourcery CodeBench Lite 5.1 2012.03-50</h3></div></div></div><p><b>Compiler optimization improvements. </b>
+	  The compiler now generates faster and/or smaller code in many
+	  cases due to optimization improvements.  In addition, several
+	  performance regressions of the previous release relative to
+	  legacy QuIC toolchains have been addressed.  Specific
+	  improvements include:
+	  </p><div class="itemizedlist"><ul type="disc"><li>
+            The compiler now makes more efficient use of constant extenders
+	    in generated code for Hexagon V4 and above.  For example, it now
+  	    avoids duplicating the same absolute base address in multiple
+	    loads and stores.
+	  </li><li>
+            The compiler can now generate the floating-point
+            multiply-accumulate instructions supported by Hexagon V5.
+          </li><li>
+            Support for comparisons has been improved in the compiler,
+            allowing (for example) better code to be generated for
+            comparisons between <code class="code">short</code> variables on Hexagon
+            V4 and above.
+          </li><li>
+  	    Hardware loop instructions are now
+            generated more effectively for loops with <code class="code">short</code>
+            or <code class="code">char</code> index variables.
+          </li><li>
+            The compiler is now able to generate the conditional forms of the
+            sign-extend and shift-halfword instructions, supported by
+            Hexagon V4 and above.
+          </li><li>
+            The compiler now uses post-increment and post-decrement
+            addressing modes more effectively on all architecture versions,
+            and generates conditional loads and stores on Hexagon V4
+            and above.
+          </li><li>
+            The compiler now provides improved support for read-modify-write
+            (<code class="code">MEMOP</code> class) instructions on Hexagon V4 and above.
+          </li><li>
+            The compiler now optimizes calls to <code class="code">pow</code> with a
+            constant base 2 into equivalent calls to <code class="code">exp2</code>
+            or <code class="code">ldexp</code>.
+          </li></ul></div><p>
+        </p><p><b>Bitfield signedness. </b>
+          The signedness for plain bitfields defined with
+	  <code class="code">int</code> defaults to unsigned.
+        </p><p><b>Shared linking. </b>
+          The compiler driver now supports shared linking with the
+	  <code class="option">-shared</code> option.
+        </p><p><b>Packet constraint violations with <code class="code">dcfetch</code>. </b>
+          The assembler now uniformly issues an error rather than
+	  attempting to remove excess <code class="code">dcfetch</code> instructions
+	  to satisfy packet formation constraints.  The compiler bug
+	  that caused such invalid packets to be generated has been fixed.
+        </p><p><b>Big-endian ELF support. </b>
+	  Support for big-endian ELF objects has been removed from the
+	  Hexagon ELF toolchain, as the architecture is
+	  little-endian only.  Both the <code class="option">-EB</code> and
+	  <code class="option">-EL</code> assembler command-line options have been
+	  removed, since the default is always correct for Hexagon.
+        </p><p><b>Assembler fix for local common. </b>
+          A bug has been fixed that caused the assembler to
+          erroneously generate an <code class="literal">attempt to move .org
+          backwards</code> error for some uses of the
+          <code class="literal">.lcomm</code> directive.
+        </p><p><b>Out-of-range branch veneers. </b>
+          The linker now generates smaller branch veneers for Hexagon
+	  V5 object files.
+        </p><p><b>Disassembler output bug fix. </b>
+          The disassembler now correctly displays instructions using
+	  32-bit absolute addressing modes.
+        </p><p><b>Installer failure during upgrade. </b>
+        Some recent releases were affected by an installer bug
+        on Windows hosts that caused installing a newer version of
+        Sourcery CodeBench Lite 5.1 into the same directory to fail with the error
+        <code class="literal">Sourcery CodeBench Lite 5.1 for Hexagon ELF upgrade failed</code>.
+        This bug has now been fixed, but the affected releases cannot be
+        upgraded.  As a workaround, uninstall the older release before
+        installing the new version.
+       </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id410833"></a>A.1.28. Changes in Sourcery CodeBench Lite 5.1 2011.09-385</h3></div></div></div><p><b>Incorrect compilation bug fix. </b>
+          A bug has been fixed which sometimes caused the compiler to
+          incorrectly reorder writes to memory.
+        </p><p><b>New-value jumps. </b>
+          The compiler now makes better use of new-value comparison jumps.
+        </p><p><b>Position-independent code. </b>
+          A bug has been fixed in the compiler that caused it to emit
+          code that is not position-independent when compiling with
+          <code class="option">-fPIC</code>.
+        </p><p><b>Target prefix changed. </b>
+          The compiler and other executables for the bare-metal
+          Hexagon ELF toolchain now use <code class="literal">hexagon-</code>
+          as the target prefix instead of <code class="literal">hexagon-elf-</code>.
+          For example, the C compiler is now named
+          <code class="command">hexagon-gcc</code>.
+        </p><p><b>Constant-extended conditional loads/stores. </b>
+          A bug has been fixed that prevented the compiler from
+          generating constant-extended conditional loads/stores;
+          these are more efficient than conditional jumps. 
+        </p><p><b>Long calls. </b>
+          Code generation in the compiler has been improved by making
+          better use of long calls.
+        </p><p><b>Some target preprocessor defines removed. </b>
+          The preprocessor no longer defines <code class="code">hexagon</code>
+          or <code class="code">__hexagon</code> by default. Similarly,
+          <code class="code">qdsp6</code> and <code class="code">__qdsp6</code> are no longer
+          defined when using <code class="option">-mqdsp6-compat</code>.
+        </p><p><b>Hexagon V5 intrinsics. </b>
+          Incorrect type information for Hexagon V5 intrinsics has
+          been corrected in the compiler.
+        </p><p><b>Hardware loops. </b>
+          The compiler now uses hardware loop instructions
+          more aggressively. While this results in faster code,
+          it can also result in incorrect program behavior if
+          loop counters overflow. For more information see <a class="xref" href="ch03s04.html#hexagon-hardware-loops" title="3.4.2. Hardware Loop Support">Section 3.4.2, &#8220;Hardware Loop Support&#8221;</a>. Additionally, hardware
+          loop initialization code has been improved in many cases.
+        </p><p><b>Improved support for out-of-range branches. </b>
+          Linker support for out-of-range branches has been improved
+	  for V4 compatible architectures.
+        </p><p><b>Improved assembler support for Hexagon V5. </b>
+          Support for additional Hexagon V5 instructions has been added
+          to the assembler.
+        </p><p><b>Smaller executables. </b>
+          A bug in the linker has been fixed that cause it to create
+	  executables containing up to 512K of unnecessary padding bytes.
+	  Run-time memory usage was not affected by the bug, only the size of
+	  executable files.
+        </p><p><b>Constant-extended <code class="code">mpyi</code> instructions. </b>
+          A bug has been fixed that caused the assembler to
+          reject <code class="code">mpyi</code> instructions with
+          a constant extender as their immediate value.
+        </p><p><b>Assembler register parsing fix. </b>
+          A bug has been fixed that caused the assembler to incorrectly
+	  reject register pair syntax such as <code class="literal">lr:fp</code>.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id411256"></a>A.1.29. Changes in Sourcery CodeBench Lite 5.1 2011.09-378</h3></div></div></div><p><b>GCC comparison improvements. </b>
+          The compiler now generates better code for comparison
+          operations, in particular when the result of a comparison is
+          assigned to a variable. Better code is also generated in some
+          cases for logical operations on Boolean values.
+        </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id411331"></a>A.1.30. Changes in Sourcery CodeBench Lite 5.1 2011.09-375</h3></div></div></div><p><b>Initial release. </b>
+          This is the initial release for Hexagon ELF.
+        </p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch05s03.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="chap-license.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">5.3. Manuals for GNU Toolchain Components </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Appendix B. Sourcery CodeBench Lite 5.1 Licenses</td></tr></table></div></body></html>
